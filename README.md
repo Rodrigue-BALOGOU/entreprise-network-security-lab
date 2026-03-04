@@ -1,80 +1,75 @@
-🏢 Conception d’une Architecture Réseau d’Entreprise Sécurisée et Simulation d’Attaque
+🏢 Enterprise Security Lab – Conception d’une Infrastructure d’Entreprise Sécurisée et Simulation d’Attaque /defense
 
-📌 Contexte du projet
-Ce projet consiste à concevoir et déployer une infrastructure réseau d’entreprise segmentée, puis à simuler un scénario d’attaque réaliste afin d’analyser les mécanismes de défense mis en place.
-L’entreprise fictive SecuTech Solutions représente une PME disposant :
-d’une zone DMZ exposée,
-d’un réseau interne sous Active Directory,
-d’une segmentation VLAN,
-d’un pare-feu centralisé,
-d’outils de supervision et de détection d’intrusion.
-L’objectif est de reproduire un environnement professionnel réaliste afin d’étudier les interactions entre attaque et défense.
+![Project](https://img.shields.io/badge/Project-Enterprise%20Security%20Lab-blue)
+![Domain](https://img.shields.io/badge/Domain-Enterprise%20Security-darkgreen)
+![Offensive](https://img.shields.io/badge/Offensive-Red%20Team-critical)
+![Defensive](https://img.shields.io/badge/Defensive-Blue%20Team-blue)
+![Firewall](https://img.shields.io/badge/Firewall-pfSense-orange)
+![Directory](https://img.shields.io/badge/Directory-Active%20Directory-purple)
+![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
 
-🎯 Objectifs
-Concevoir une architecture réseau segmentée
-Déployer un environnement Active Directory
-Mettre en place une isolation par VLAN
-Configurer un pare-feu (pfSense)
-Simuler une attaque externe multi-étapes
-Détecter et analyser l’activité malveillante
-Proposer des mesures de remédiation
+📌 Présentation du projet
+Ce projet consiste à concevoir, déployer et sécuriser une infrastructure réseau d’entreprise segmentée, puis à simuler des scénarios d’attaque réalistes afin d’analyser et renforcer les mécanismes de défense.
+L’entreprise fictive SecureTech Solutions représente une PME disposant d’une architecture multi-zones respectant les principes modernes de cybersécurité : segmentation réseau, contrôle strict des flux, défense en profondeur et isolation des ressources critiques.
+L’objectif est de reproduire un environnement professionnel réaliste permettant d’étudier les interactions entre architecture, exploitation et remédiation.
+
 🏗 Architecture de l’infrastructure
-🔹 Segmentation réseau
-VLAN 10 – DMZ (services exposés)
-VLAN 20 – Réseau interne (LAN)
-VLAN 30 – Réseau attaquant (simulation externe)
-🔹 Composants principaux
-Pare-feu : pfSense
-Contrôleur de domaine : Windows Server (AD + DNS)
-Poste client joint au domaine
-Serveur Web en DMZ
-Machine attaquante (Kali Linux)
-Serveur de supervision (Zabbix)
-IDS : Suricata
-🔐 Principes de sécurité appliqués
-L’architecture repose sur :
-Le principe du moindre privilège
-La segmentation réseau
-La réduction de la surface d’attaque
-Une approche défense en profondeur
-Les communications inter-VLAN sont strictement contrôlées par des règles de filtrage.
+L’architecture repose sur une segmentation en plusieurs zones logiques distinctes :
+WAN : accès externe connecté via NAT (environnement de virtualisation)
+DMZ : services exposés (serveur web vulnérable)
+Réseau Utilisateurs : postes métiers (RH, Direction, Comptabilité)
+Réseau Serveurs Internes : Active Directory et services critiques
+Réseau Administration : postes et comptes à privilèges élevés isolés
+Le pare-feu pfSense est positionné comme point de contrôle central et assure le filtrage des flux inter-zones selon une politique de sécurité restrictive.
 
-🧪 Scénario d’attaque simulé
-Le projet inclut une simulation d’attaque structurée :
-Phase de reconnaissance
-Exploitation d’un service exposé
-Pivot vers le réseau interne
+🧰 Composants principaux
+Pare-feu : pfSense
+Contrôleur de domaine : Windows Server 2022 (AD DS + DNS)
+Postes clients : Windows 10 pro / 10 pro / 11 enterprise (dont poste avec AppLocker)
+Machine attaquante : Kali Linux
+Serveur en DMZ : machine vulnérable
+Supervision : Zabbix
+IDS/IPS : Suricata
+
+🎯 Objectifs techniques
+Concevoir une architecture segmentée multi-zones
+Déployer un environnement Active Directory structuré
+Implémenter une isolation réseau stricte
+Configurer un firewall avec règles inter-VLAN contrôlées
+Simuler des scénarios d’attaque externes et internes
+Analyser les logs et événements de sécurité
+Appliquer des mesures de hardening et de remédiation
+
+🧪 Scénarios d’attaque simulés
+Le projet inclut des simulations structurées comprenant :
+Phase de reconnaissance (scan, enumeration)
+Exploitation d’un service exposé en DMZ
+Tentative de pivot vers le réseau interne
 Mouvement latéral
 Escalade de privilèges
-Détection et analyse des journaux
+Analyse post-compromission
 
-🛡 Mécanismes de défense
-Règles de filtrage pare-feu
-Système de détection d’intrusion (IDS)
+🛡 Approche défensive
+Règles de filtrage strictes sur pfSense
+Segmentation inter-zones contrôlée
+Isolation du réseau d’administration
+IDS/IPS (Suricata)
 Supervision réseau (Zabbix)
-Analyse des logs
-Validation de la segmentation
+Analyse des journaux de sécurité
+Validation des contremesures après attaque
 
-📊 Démarche d’analyse des risques
-Identification des services exposés
-Modélisation des menaces
-Analyse des chemins d’attaque
-Évaluation de l’impact
-Recommandations de sécurisation
+📂 Structure du dépôt
+architecture/ → Conception logique, plan IP, segmentation, objectifs sécurité
+configuration/ → Implémentation technique (pfSense, AD, clients, hardening)
+attack-scenario/ → Méthodologie offensive, résultats et preuves
+defense/ → Analyse des vulnérabilités et remédiation
+screenshots/ → Captures organisées servant de preuves techniques
 
-🧰 Technologies utilisées
-VMware
-pfSense
-Windows Server
-Kali Linux
-Zabbix
-VLAN
-IDS/IPS
-
-🎓 Objectif pédagogique
-Ce projet vise à démontrer des compétences pratiques en :
-Architecture réseau sécurisée
-Administration système
-Tests d’intrusion encadrés
-Mise en place de mécanismes défensifs
-Analyse de sécurité en environnement d’entreprise
+🚀 Compétences démontrées
+Segmentation réseau avancée
+Configuration de firewall en environnement multi-zones
+Administration Active Directory
+Simulation de mouvement latéral
+Hardening d’infrastructure Windows
+Analyse offensive et défensive
+Documentation technique structurée
