@@ -2,6 +2,7 @@
 
 Cette section décrit l’architecture Active Directory mise en place dans le laboratoire ainsi que les choix de conception associés.
 L’objectif est de reproduire un environnement d’entreprise réaliste permettant de centraliser la gestion des identités, des machines et des ressources réseau.
+
 Présentation générale
 L’infrastructure repose sur un contrôleur de domaine unique déployé sous Windows Server 2022.
 Ce serveur assure plusieurs rôles essentiels :
@@ -36,6 +37,7 @@ Les objectifs sont :
 centraliser les données
 contrôler les accès via les permissions NTFS
 faciliter la gestion des droits utilisateurs
+
 Les accès aux partages sont contrôlés à l’aide :
 des groupes Active Directory
 des permissions NTFS
@@ -53,13 +55,25 @@ OU_Ordinateurs
 OU_Admin
 Cette organisation améliore la lisibilité et la gestion du domaine.
 Comptes et rôles
-Plusieurs types de comptes sont utilisés :
-Administrateur du domaine
+* Plusieurs types de comptes sont utilisés :
+
+* Administrateur du domaine
 Compte disposant de privilèges complets sur l’infrastructure.
 Il est utilisé uniquement pour les opérations critiques.
-Compte administrateur
+
+* Compte administrateur
 Compte dédié aux tâches d’administration quotidiennes.
-Comptes utilisateurs
+
+* Administrateur support
+Compte destiné aux opérations de support utilisateur.
+Ses rôles incluent :
+réinitialisation de mots de passe
+gestion des comptes utilisateurs
+assistance aux utilisateurs
+Ce compte possède des droits limités grâce à une délégation de contrôle sur certaines Unités d’Organisation.
+Il ne dispose pas de privilèges complets sur l’infrastructure.
+
+* Comptes utilisateurs
 Comptes standards utilisés par les employés.
 Cette séparation permet de limiter les risques liés à l’utilisation de comptes à privilèges élevés.
 Intégration réseau
