@@ -97,11 +97,32 @@ Le pare-feu pfSense agit comme :
 
 ## Supervision et détection
 
-- Supervision réseau : Zabbix
+- Supervision réseau : Zabbix (Ubuntu Server)
 - IDS/IPS : Suricata
 - Analyse des logs de sécurité
 
 ---
+
+## Centralisation des logs
+
+L’infrastructure intègre un mécanisme de collecte centralisée des événements de sécurité.
+
+Le serveur `ST-FILESERVER01` héberge également un service **Windows Event Forwarding (WEF)** permettant de collecter les événements provenant :
+
+- du contrôleur de domaine
+- des postes clients
+- des serveurs internes
+
+Les équipements réseau sont également intégrés à la supervision :
+
+- pfSense envoie ses journaux via Syslog
+- NXLog est utilisé pour la collecte et le transfert des événements Windows
+
+Cette approche permet :
+
+- une meilleure visibilité sur l’infrastructure
+- une centralisation des événements
+- une capacité d’analyse et de corrélation des logs
 
 # Machines principales
 
@@ -109,7 +130,8 @@ Le pare-feu pfSense agit comme :
 |---|---|
 | pfSense | Firewall / Routeur |
 | Windows Server 2022 | Contrôleur de domaine |
-| ST-FILESERVER01 | Serveur de fichiers |
+| ST-FILESERVER01 | Serveur de fichiers + WEF |
+| Ubuntu Server | Supervision Zabbix |
 | Windows Server | WSUS |
 | Windows 10 Pro | Postes utilisateurs |
 | Windows 11 Enterprise | Poste sécurisé / AppLocker |
