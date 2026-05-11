@@ -25,6 +25,7 @@ hébergement des partages SMB,
 gestion des permissions NTFS,
 serveur Windows Event Collector (WEC),
 point central de collecte des journaux.
+Update logging-wef.md
 L’ensemble des événements Windows et réseau est centralisé sur cette machine.
 Windows Event Forwarding (WEF)
 Objectif
@@ -40,6 +41,7 @@ des subscriptions Source-Initiated,
 WinRM,
 des stratégies de groupe (GPO),
 le service Windows Event Collector.
+
 Cette approche permet aux machines du domaine d’envoyer automatiquement leurs événements vers le serveur collecteur.
 Journaux collectés
 Les journaux suivants sont centralisés :
@@ -48,6 +50,7 @@ System
 Application
 Windows Defender
 événements liés au RDP
+
 Cette collecte permet d’améliorer la visibilité sur :
 les authentifications,
 les connexions distantes,
@@ -108,7 +111,9 @@ la surveillance des connexions RDP,
 la visibilité sur les flux réseau.
 Cette architecture reproduit des mécanismes utilisés dans des environnements SOC et infrastructures d’entreprise.
 Flux de collecte
-Plain text
+
+Plain text 
+```
 Machines Windows
     │
     ├── WinRM + WEF
@@ -128,6 +133,7 @@ NXLog
     │
     ▼
 ST-FILESERVER01
+```
 
 Bénéfices de l’implémentation
 
