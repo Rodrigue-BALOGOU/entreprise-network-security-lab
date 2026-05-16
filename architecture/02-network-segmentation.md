@@ -30,7 +30,7 @@ L’objectif principal est de :
 
 L’environnement est divisé en plusieurs zones de sécurité isolées afin d’appliquer une séparation logique entre les utilisateurs, les serveurs, les services exposés et l’administration.
 
-![Network Zones](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/01-pfSense-interfaces.png)
+![Network Zones](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/02-network-overview.png)
 
 ---
 
@@ -48,7 +48,7 @@ Interfaces configurées :
 - DMZ
 - ADMIN
 
-![pfSense Interfaces](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/02-network-overview.png)
+![pfSense Interfaces](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/01-pfSense-interfaces.png)
 
 ---
 
