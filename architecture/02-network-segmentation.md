@@ -17,26 +17,51 @@ Chaque segment possède :
 - un niveau de confiance différent,
 - des politiques de communication dédiées.
 
-L’objectif principal est de limiter :
-- les mouvements latéraux,
-- les communications inutiles,
-- la propagation d’une compromission.
+L’objectif principal est de :
+
+- limiter les mouvements latéraux,
+- réduire la surface d’attaque,
+- isoler les ressources critiques,
+- contrôler les communications inter-réseaux.
 
 ---
 
 # Global Network Segmentation
 
-L’environnement est divisé en plusieurs zones de sécurité isolées.
+L’environnement est divisé en plusieurs zones de sécurité isolées afin d’appliquer une séparation logique entre les utilisateurs, les serveurs, les services exposés et l’administration.
 
 ![Network Zones](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/01-network-zones.png)
 
 ---
 
-# pfSense Interfaces and Network Separation
+# pfSense Interfaces Architecture
 
-Le firewall pfSense dispose de plusieurs interfaces réseau permettant l’isolation logique des différents segments de l’infrastructure.
+Le firewall pfSense constitue le point central de contrôle de l’infrastructure.
 
-![pfSense Interfaces](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/02-pfsense-interfaces.png)
+Plusieurs interfaces réseau sont configurées afin d’assurer l’isolation des différents segments de sécurité.
+
+Interfaces configurées :
+
+- WAN
+- USER
+- INTERNAL
+- DMZ
+- ADMIN
+
+![pfSense Interfaces](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/02-pfSense-interfaces.png)
+
+---
+
+# Network Overview
+
+L’ensemble des segments réseau communique exclusivement via le firewall pfSense selon des politiques de sécurité strictes.
+
+Chaque réseau possède :
+- son propre espace d’adressage,
+- ses règles de communication,
+- son niveau de confiance.
+
+![Network Overview](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/03-network-overview.png)
 
 ---
 
@@ -48,133 +73,111 @@ Caractéristiques :
 
 - connecté au NAT VMware,
 - accès Internet simulé,
-- considéré comme non sécurisé,
-- utilisé pour les scénarios d’attaque externes.
+- utilisé pour les scénarios d’attaque externes,
+- considéré comme zone non sécurisée.
 
-Seuls les services explicitement publiés peuvent être accessibles depuis cette zone.
+Seuls les services explicitement publiés sont accessibles depuis cette zone.
 
 ---
 
-# Internal Server Network
+# Internal Server Network — 192.168.10.0/24
 
-Le réseau SERVEURINTERNE héberge les ressources critiques de l’entreprise.
+Le réseau SERVEURINTERNE héberge les ressources critiques de l’infrastructure.
 
 Services présents :
 
 - Active Directory
 - DNS
 - File Server
-- Services internes Windows
+- Services Windows internes
+- Collecte d’événements centralisée
 
-Cette zone applique des politiques de sécurité strictes afin de limiter les communications entrantes et sortantes.
+Cette zone applique des restrictions strictes afin de protéger les ressources sensibles.
 
 ---
 
-# User Network
+# User Network — 192.168.20.0/24
 
 Le réseau UTILISATEUR contient les postes clients joints au domaine Active Directory.
 
+Machines présentes :
+
+- Windows 11 Enterprise RH
+- Windows 10 Direction
+- Windows 11 Enterprise FINANCE
+- Postes de test utilisateurs
+
 Les utilisateurs peuvent :
 
-- s’authentifier auprès du contrôleur de domaine,
+- s’authentifier auprès du domaine,
 - accéder à Internet,
 - utiliser les services DNS,
 - accéder aux ressources autorisées.
 
-Les accès directs vers :
-- ADMIN,
-- DMZ,
-- pfSense,
-- certains serveurs internes,
-
-sont bloqués par défaut.
+Les communications directes vers les segments critiques restent limitées.
 
 ---
 
-# User Network Filtering Policy
+# DMZ Network — 192.168.30.0/24
 
-Le firewall applique des règles spécifiques au réseau utilisateur afin de contrôler les communications autorisées.
-
-![User Firewall Rules](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/03-firewall-rules-users.png)
-
----
-
-# DMZ Network
-
-La DMZ est une zone intermédiaire destinée à héberger les services exposés vers Internet.
+La DMZ est une zone isolée destinée aux services exposés.
 
 Services exposés :
 
-- HTTP
-- FTP
+- HTTP (80)
+- FTP (21)
 
-Cette zone contient une machine volontairement vulnérable utilisée dans les scénarios offensifs du laboratoire.
+Cette zone contient une machine volontairement vulnérable utilisée dans les simulations offensives du laboratoire.
 
-L’objectif de la DMZ est de :
+Objectifs :
 
-- contenir une éventuelle compromission,
-- empêcher l’accès direct aux ressources critiques,
-- limiter les mouvements latéraux.
-
----
-
-# DMZ Filtering Policy
-
-Les communications de la DMZ sont strictement limitées afin de protéger les réseaux internes.
-
-![DMZ Firewall Rules](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/04-firewall-rules-dmz.png)
+- isoler les services exposés,
+- limiter les mouvements latéraux,
+- empêcher l’accès direct au réseau interne.
 
 ---
 
-# Administration Network
+# Administration Network — 192.168.99.0/24
 
 Le réseau ADMIN est réservé aux opérations d’administration et de supervision.
 
 Il permet :
 
-- l’accès aux équipements critiques,
 - l’administration des serveurs,
+- l’accès aux équipements critiques,
 - la gestion de l’infrastructure,
 - l’accès à l’interface pfSense.
 
-Ce segment possède le niveau de confiance le plus élevé de l’infrastructure.
+Ce segment possède le niveau de confiance le plus élevé de l’environnement.
 
 ---
 
-# Administration Filtering Policy
-
-Le réseau ADMIN dispose de privilèges élevés mais reste isolé des autres segments afin de réduire la surface d’attaque.
-
-![Admin Firewall Rules](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/network-segmentation/05-firewall-rules-admin.png)
-
----
-
-# Security Model
+# Security Principles
 
 L’architecture applique plusieurs principes fondamentaux de cybersécurité :
 
-- segmentation réseau,
+- segmentation réseau stricte,
 - principe du moindre privilège,
-- politique par défaut : deny all,
-- filtrage strict des communications,
-- isolation des services exposés,
-- réduction de la surface d’attaque.
+- isolation des ressources critiques,
+- contrôle des flux inter-réseaux,
+- réduction de la surface d’exposition,
+- séparation des zones d’administration.
 
-Toute communication inter-réseau doit être explicitement autorisée par le firewall.
+Par défaut, toute communication non explicitement autorisée est bloquée.
 
 ---
 
-# Role of the Firewall
+# Role of pfSense
 
-Le firewall pfSense constitue le point central de sécurité de l’infrastructure.
+Le firewall pfSense constitue le cœur de l’infrastructure réseau.
 
 Fonctions principales :
 
 - routage inter-réseaux,
-- filtrage des flux,
+- filtrage des communications,
 - translation NAT,
-- journalisation des événements,
-- contrôle des accès,
+- journalisation des connexions,
+- contrôle centralisé des flux,
 - application des politiques réseau.
 
 Toutes les communications transitent par ce point de contrôle.
@@ -183,14 +186,14 @@ Toutes les communications transitent par ce point de contrôle.
 
 # Conclusion
 
-L’architecture réseau SecureTech repose sur une segmentation stricte et un contrôle centralisé des communications.
+L’architecture réseau SecureTech repose sur une segmentation logique forte et un contrôle strict des communications.
 
-Cette approche permet de :
+Cette approche permet :
 
-- réduire la surface d’attaque,
-- limiter les mouvements latéraux,
-- protéger les ressources critiques,
-- isoler les services exposés,
-- renforcer la sécurité globale de l’infrastructure.
+- de protéger les ressources critiques,
+- de limiter les mouvements latéraux,
+- de réduire la surface d’attaque,
+- d’isoler les services exposés,
+- d’améliorer la résilience globale de l’infrastructure.
 
-Le firewall pfSense garantit l’application des politiques réseau et constitue l’élément central de la sécurité de l’environnement.
+Le firewall pfSense constitue l’élément central de sécurité et garantit l’application des politiques réseau dans l’ensemble du laboratoire.
