@@ -16,7 +16,7 @@ Le laboratoire est construit autour d’une approche offensive et défensive per
 
 ---
 
-## Technical Environment
+# Technical Environment
 
 | Component | Technology |
 |---|---|
@@ -29,15 +29,15 @@ Le laboratoire est construit autour d’une approche offensive et défensive per
 
 ---
 
-## Global Infrastructure Architecture
+# Global Infrastructure Architecture
 
 L’infrastructure repose sur un firewall pfSense configuré avec plusieurs interfaces réseau afin d’isoler les différentes zones de sécurité.
 
-![Global Architecture](../../../screenshots/architecture/overview/01-global-architecture.png)
+![Global Architecture](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/overview/01-global-architecture.png)
 
 ---
 
-## pfSense Multi-Interface Configuration
+# pfSense Multi-Interface Configuration
 
 Le firewall agit comme point central de contrôle et applique les politiques de filtrage interzones.
 
@@ -49,23 +49,23 @@ Interfaces configurées :
 - INTERNAL
 - ADMIN
 
-![pfSense Interfaces](../../../screenshots/architecture/overview/02-pfSense-interfaces.png)
+![pfSense Interfaces](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/overview/02-pfSense-interfaces.png)
 
 ---
 
-## Virtual Environment Overview
+# Virtual Environment Overview
 
 L’ensemble de l’environnement est déployé dans une infrastructure virtualisée afin de faciliter les simulations d’attaque, les tests de segmentation et les scénarios de défense.
 
-![Virtual Environment](../../../screenshots/architecture/overview/03-virtual-environment.png)
+![Virtual Environment](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/overview/03-virtual-environment.png)
 
 ---
 
-## Network Overview
+# Network Overview
 
 L’architecture réseau est segmentée en plusieurs zones logiques afin de limiter les communications inutiles et réduire les risques de propagation en cas de compromission.
 
-![Network Overview](../../../screenshots/architecture/overview/04-network-overview.png)
+![Network Overview](https://raw.githubusercontent.com/Rodrigue-BALOGOU/entreprise-network-security-lab/main/screenshots/architecture/overview/04-network-overview.png)
 
 ---
 
@@ -225,8 +225,6 @@ L’architecture applique plusieurs principes fondamentaux de sécurité :
 ---
 
 # Exposure Surface
-
-Services intentionally exposed to the WAN :
 
 | Service | Port | Purpose |
 |---|---|---|
