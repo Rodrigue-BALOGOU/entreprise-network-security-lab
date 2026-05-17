@@ -222,8 +222,7 @@ Cette infrastructure reste un laboratoire pédagogique et présente certaines li
 
 - un seul contrôleur de domaine,
 - absence de redondance,
-- absence de haute disponibilité,
-- serveur de fichiers hébergé sur le contrôleur de domaine.
+- absence de haute disponibilité
 
 Ces choix simplifient le laboratoire mais ne correspondent pas aux bonnes pratiques d’un environnement de production réel.
 
