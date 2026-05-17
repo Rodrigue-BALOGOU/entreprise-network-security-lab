@@ -96,7 +96,7 @@ Objectifs des GPO :
 
 Les politiques sont appliquées selon l’organisation des OU.
 
-![Group Policy Management](../screenshots/architecture/active-directory-design/04-group-policy-management.png)
+![Group Policy Management](../screenshots/architecture/active-directory-design/04-group-policy-managemnt.png)
 
 ![Group Policy Part 2](../screenshots/architecture/active-directory-design/05-group-policy-partie2.png)
 
