@@ -1,52 +1,198 @@
-04 – Segmentation réseau et politique de pare-feu
+# 04 – Network Segmentation and Firewall Policy
 
-Cette section décrit la segmentation réseau mise en place dans le laboratoire ainsi que les règles de filtrage configurées sur le pare-feu pfSense.
-L’objectif est de reproduire une architecture d’entreprise réaliste dans laquelle les différents segments du réseau sont isolés et où seules les communications nécessaires sont autorisées.
-La segmentation réseau est un principe fondamental de sécurité. Elle permet de réduire la surface d’attaque et de limiter les déplacements latéraux en cas de compromission d’une machine.
-Dans ce laboratoire, l’infrastructure est divisée en plusieurs zones réseau.
+# Introduction
 
-* Réseau ADMIN
-Le réseau ADMIN est dédié aux administrateurs systèmes.
-Les postes d’administration sont placés dans ce segment afin d’effectuer les opérations de gestion sur l’infrastructure.
-Depuis ce réseau, les administrateurs peuvent accéder aux ressources critiques telles que :
-le contrôleur de domaine
-les postes utilisateurs
-l’interface d’administration du pare-feu pfSense
-L’accès à ce réseau est strictement réservé aux opérations d’administration.
+Cette section présente la segmentation réseau ainsi que la politique de filtrage mise en place dans le laboratoire SecureTech à l’aide du firewall pfSense.
 
-* Réseau SERVEURINTERNE
-Le réseau SERVEURINTERNE héberge les serveurs internes de l’infrastructure.
-Dans ce laboratoire, il contient principalement :
-le contrôleur de domaine Active Directory
-le service DNS interne
-Ce réseau est considéré comme un segment critique car il héberge les services centraux de l’environnement.
-L’accès vers ce réseau est donc limité afin de protéger les services essentiels de l’infrastructure.
+L’objectif est de reproduire une architecture d’entreprise réaliste dans laquelle :
 
-* Réseau UTILISATEUR
-Le réseau UTILISATEUR représente les postes de travail des employés.
-Les machines présentes dans ce segment sont jointes au domaine Active Directory et utilisent le serveur DNS interne fourni par le contrôleur de domaine.
-Les postes utilisateurs peuvent accéder aux services nécessaires à leur fonctionnement mais ne peuvent pas communiquer directement avec les réseaux sensibles tels que le réseau ADMIN ou certains services internes.
+- les différents segments réseau sont isolés,
+- les flux sont strictement contrôlés,
+- seules les communications nécessaires sont autorisées,
+- les mouvements latéraux sont limités.
 
-* Réseau DMZ
-La DMZ (zone démilitarisée) est utilisée pour isoler les machines qui présentent un niveau de risque plus élevé ou qui pourraient être exposées à des accès externes.
-L’objectif de cette zone est de protéger le réseau interne contre une éventuelle compromission.
-Les règles du pare-feu empêchent les machines de la DMZ d’initier des connexions vers :
-le réseau des serveurs internes
-le réseau d’administration
-le réseau des utilisateurs
+La segmentation réseau constitue un principe fondamental de cybersécurité permettant de réduire la surface d’attaque et de protéger les ressources critiques de l’infrastructure.
 
-Cette isolation permet de protéger les composants critiques comme Active Directory.
-Principes de la politique de pare-feu
-La configuration du pare-feu repose sur plusieurs principes de sécurité.
+---
 
-Principe du moindre privilège
-Seules les communications nécessaires au fonctionnement du système sont autorisées.
+# NAT and Port Forwarding
+
+Le firewall pfSense assure la publication contrôlée des services exposés vers le WAN à travers des règles NAT.
+
+Services publiés :
+
+- HTTP (80)
+- FTP (21)
+
+Ces services sont hébergés dans la DMZ afin d’éviter toute exposition directe du réseau interne.
+
+Cette approche permet :
+
+- d’isoler les services exposés,
+- de contrôler les flux entrants,
+- de limiter les risques de compromission du réseau interne.
+
+![NAT Port Forwarding](../screenshots/architecture/firewall-policy/01-nat-port-forwarding.png)
+
+---
+
+# WAN Interface
+
+L’interface WAN représente le point d’entrée externe de l’infrastructure.
+
+Elle est connectée au réseau NAT fourni par VMware Workstation et est considérée comme non fiable.
+
+Le firewall applique plusieurs mécanismes de sécurité :
+
+- filtrage des connexions entrantes,
+- contrôle des services publiés,
+- isolation du réseau interne,
+- journalisation des flux réseau.
+
+Aucun accès direct aux réseaux internes n’est autorisé depuis le WAN.
+
+![WAN Interface](../screenshots/architecture/firewall-policy/02-wan-interface.png)
+
+---
+
+# USER Network Rules
+
+Le réseau UTILISATEUR contient les postes de travail des employés.
+
+Les machines présentes dans ce segment sont jointes au domaine Active Directory et utilisent les services internes nécessaires à leur fonctionnement.
+
+Communications autorisées :
+
+- DNS vers le contrôleur de domaine,
+- authentification Active Directory,
+- accès HTTPS vers Internet.
+
+Communications interdites :
+
+- accès direct au réseau ADMIN,
+- accès direct à la DMZ,
+- accès non autorisés aux serveurs internes,
+- accès à l’interface pfSense.
+
+Cette politique permet de limiter les mouvements latéraux en cas de compromission d’un poste utilisateur.
+
+![USER Firewall Rules](../screenshots/architecture/firewall-policy/03-firewall-rules-user.png)
+
+---
+
+# INTERNAL SERVER Network Rules
+
+Le réseau SERVEURINTERNE héberge les composants critiques de l’infrastructure :
+
+- Active Directory,
+- DNS interne,
+- services d’authentification.
+
+Ce segment possède un niveau de protection élevé.
+
+Communications autorisées :
+
+- DNS,
+- NTP,
+- HTTPS sortant pour les mises à jour.
+
+Communications interdites :
+
+- accès non explicitement autorisés,
+- communications vers la DMZ,
+- flux inutiles vers les autres segments.
+
+Cette approche permet de protéger les services centraux de l’environnement.
+
+![SERVER Firewall Rules](../screenshots/architecture/firewall-policy/04-firewall-rules-server.png)
+
+---
+
+# DMZ Network Rules
+
+La DMZ est utilisée pour héberger les systèmes exposés et les machines à risque élevé.
+
+Dans ce laboratoire, elle contient une machine vulnérable utilisée pour les simulations offensives.
+
+Services exposés :
+
+- HTTP
+- FTP
+
+Les règles de sécurité empêchent toute communication initiée depuis la DMZ vers :
+
+- le réseau SERVEURINTERNE,
+- le réseau ADMIN,
+- le réseau UTILISATEUR.
+
+Seuls certains flux sortants nécessaires sont autorisés :
+
+- DNS,
+- HTTPS pour les mises à jour.
+
+Cette isolation protège les ressources critiques de l’infrastructure.
+
+![DMZ Firewall Rules](../screenshots/architecture/firewall-policy/05-firewall-rules-dmz.png)
+
+---
+
+# ADMIN Network Rules
+
+Le réseau ADMIN est dédié aux opérations d’administration et de supervision.
+
+Il possède le niveau de confiance le plus élevé de l’infrastructure.
+
+Depuis ce réseau, les administrateurs peuvent :
+
+- administrer les serveurs,
+- gérer les postes utilisateurs,
+- accéder à l’interface pfSense,
+- superviser l’environnement.
+
+Aucun accès entrant vers le réseau ADMIN n’est autorisé depuis les autres segments.
+
+Cette séparation permet de protéger les opérations critiques d’administration.
+
+![ADMIN Firewall Rules](../screenshots/architecture/firewall-policy/06-firewall-rules-admin.png)
+
+---
+
+# Security Principles
+
+La politique de sécurité repose sur plusieurs principes fondamentaux :
+
+## Principle of Least Privilege
+
+Seules les communications nécessaires au fonctionnement de l’infrastructure sont autorisées.
+
 Tout le reste du trafic est bloqué par défaut.
-Isolation des réseaux
 
-Les différents segments du réseau sont isolés afin de limiter la propagation d’une attaque.
-Accès d’administration contrôlé
-Les opérations d’administration sont réalisées uniquement depuis le réseau ADMIN.
-Communications sortantes limitées
-Les serveurs internes et les machines de la DMZ disposent uniquement des accès sortants nécessaires, notamment pour les mises à jour ou la résolution DNS.
-Cette architecture permet de simuler une infrastructure d’entreprise où les différentes zones réseau sont contrôlées par des politiques de sécurité strictes.
+## Network Isolation
+
+Les différents segments sont isolés afin de limiter :
+
+- les déplacements latéraux,
+- la propagation d’une compromission,
+- les accès non autorisés.
+
+## Controlled Administrative Access
+
+Les opérations sensibles sont réalisées uniquement depuis le réseau ADMIN.
+
+## Restricted Outbound Communications
+
+Les accès sortants des serveurs internes et de la DMZ sont limités aux besoins strictement nécessaires.
+
+---
+
+# Conclusion
+
+La segmentation réseau et la politique de filtrage mises en place dans SecureTech permettent :
+
+- de réduire la surface d’attaque,
+- de protéger les services critiques,
+- de contrôler les communications inter-réseaux,
+- de limiter les mouvements latéraux,
+- de reproduire une architecture d’entreprise réaliste.
+
+Le firewall pfSense constitue le point central de contrôle et applique l’ensemble des politiques de sécurité de l’infrastructure.
