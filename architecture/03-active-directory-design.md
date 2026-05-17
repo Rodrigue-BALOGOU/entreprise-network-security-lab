@@ -1,114 +1,247 @@
-05 – Architecture Active Directory
+# 03 – Active Directory Design
 
-Cette section décrit l’architecture Active Directory mise en place dans le laboratoire ainsi que les choix de conception associés.
-L’objectif est de reproduire un environnement d’entreprise réaliste permettant de centraliser la gestion des identités, des machines et des ressources réseau.
+# Introduction
 
-Présentation générale
-L’infrastructure repose sur un contrôleur de domaine unique déployé sous Windows Server 2022.
-Ce serveur assure plusieurs rôles essentiels :
-Active Directory Domain Services (AD DS)
-DNS interne
-Authentification des utilisateurs et des machines
-Serveur de fichiers
-Le domaine configuré est :
+Cette section présente l’architecture Active Directory déployée dans le laboratoire SecureTech ainsi que les principaux choix de conception associés.
 
-* corp.securetech.local
-  
-Les postes utilisateurs sont intégrés à ce domaine afin de bénéficier d’une gestion centralisée.
-Rôle du contrôleur de domaine
+L’objectif est de reproduire une infrastructure d’entreprise réaliste permettant :
+
+- la centralisation des identités,
+- la gestion des utilisateurs,
+- l’administration des postes clients,
+- le contrôle des accès,
+- la gestion centralisée des ressources réseau.
+
+L’environnement repose sur Windows Server 2022 et Active Directory Domain Services (AD DS).
+
+---
+
+# Active Directory Infrastructure Overview
+
+L’infrastructure Active Directory est organisée autour d’un contrôleur de domaine principal situé dans le réseau SERVEURINTERNE.
+
+Fonctions assurées :
+
+- Active Directory Domain Services
+- DNS interne
+- Authentification Kerberos
+- Gestion des utilisateurs et groupes
+- Gestion des ordinateurs du domaine
+- Serveur de fichiers
+
+Nom du domaine :
+
+```text
+corp.securetech.local
+```
+
+Les postes clients Windows sont intégrés au domaine afin de bénéficier d’une administration centralisée et d’un contrôle cohérent des accès.
+
+![Domain Structure](../screenshots/architecture/active-directory-design/01-domain-structure.png)
+
+---
+
+# Organizational Units (OU)
+
+L’environnement est structuré à l’aide d’Unités d’Organisation (OU) afin d’améliorer :
+
+- l’organisation logique du domaine,
+- l’administration des ressources,
+- l’application des stratégies de groupe (GPO),
+- la délégation des tâches administratives.
+
+Les principales OU déployées sont :
+
+- OU_Users
+- OU_Computers
+- OU_Admin
+
+Cette séparation permet une gestion plus claire et plus sécurisée des objets Active Directory.
+
+![Organizational Units](../screenshots/architecture/active-directory-design/02-organization-units.png)
+
+---
+
+# Users and Groups Management
+
+Les utilisateurs et groupes Active Directory sont organisés selon leurs rôles afin de respecter le principe du moindre privilège.
+
+Types de comptes utilisés :
+
+- Administrateur du domaine
+- Administrateur système
+- Administrateur support
+- Comptes utilisateurs standards
+
+Les groupes permettent :
+
+- la gestion centralisée des permissions,
+- le contrôle des accès,
+- l’attribution simplifiée des droits.
+
+![Users and Groups](../screenshots/architecture/active-directory-design/03-users-and-groups.png)
+
+---
+
+# Group Policy Management
+
+Les stratégies de groupe (GPO) permettent d’appliquer des paramètres de sécurité et de configuration aux utilisateurs et aux machines du domaine.
+
+Objectifs des GPO :
+
+- sécurisation des postes,
+- contrôle des configurations système,
+- limitation des actions utilisateurs,
+- administration centralisée.
+
+Les politiques sont appliquées selon l’organisation des OU.
+
+![Group Policy Management](../screenshots/architecture/active-directory-design/04-group-policy-management.png)
+
+![Group Policy Part 2](../screenshots/architecture/active-directory-design/05-group-policy-partie2.png)
+
+---
+
+# AGDLP Implementation
+
+L’infrastructure applique le modèle AGDLP afin d’organiser proprement les permissions Active Directory.
+
+Principe appliqué :
+
+```text
+Accounts → Global Groups → Domain Local Groups → Permissions
+```
+
+Cette approche permet :
+
+- une gestion simplifiée des accès,
+- une meilleure évolutivité,
+- une séparation claire entre utilisateurs et permissions.
+
+![AGDLP Implementation](../screenshots/architecture/active-directory-design/06-agdlp-implementation.png)
+
+---
+
+# Computers Organization
+
+Les ordinateurs du domaine sont organisés dans des OU spécifiques afin de faciliter :
+
+- l’administration des postes,
+- l’application des GPO,
+- la gestion des accès,
+- la supervision du parc informatique.
+
+Les postes clients sont séparés selon leur rôle dans l’infrastructure.
+
+![Computers Organization](../screenshots/architecture/active-directory-design/07-computers-organization.png)
+
+---
+
+# Domain Controller Role
+
 Le contrôleur de domaine constitue le cœur de l’infrastructure.
+
 Il permet :
 
-* l’authentification centralisée via Kerberos
-* la gestion des comptes utilisateurs et groupes
-* la gestion des ordinateurs du domaine
-* la résolution DNS interne
+- l’authentification centralisée via Kerberos,
+- la gestion des comptes utilisateurs et groupes,
+- la gestion des ordinateurs du domaine,
+- la résolution DNS interne.
 
 Le service DNS intégré à Active Directory est utilisé pour :
-résoudre les noms internes
-permettre la localisation des services AD (enregistrements SRV)
-effectuer des requêtes externes via un mécanisme de redirection (forwarder) configuré vers le pare-feu pfSense
 
-Le pare-feu pfSense agit ainsi comme point de relais pour la résolution DNS externe, permettant un contrôle centralisé du trafic sortant.
-Serveur de fichiers
-Le serveur joue également le rôle de serveur de fichiers.
-Il permet de centraliser le stockage des données utilisateurs et des ressources partagées.
-Les objectifs sont :
-centraliser les données
-contrôler les accès via les permissions NTFS
-faciliter la gestion des droits utilisateurs
+- résoudre les noms internes,
+- permettre la localisation des services AD (enregistrements SRV),
+- effectuer des requêtes externes via un mécanisme de redirection configuré vers pfSense.
 
-Les accès aux partages sont contrôlés à l’aide :
-des groupes Active Directory
-des permissions NTFS
-Cette approche permet de respecter le principe du moindre privilège.
-Organisation logique (Unités d’Organisation)
+Le firewall pfSense agit comme relais DNS externe afin de centraliser le contrôle du trafic sortant.
 
-L’environnement est structuré à l’aide d’Unités d’Organisation (OU).
-Elles permettent :
-d’organiser les utilisateurs et les machines
-d’appliquer des stratégies de groupe (GPO)
-de déléguer certaines tâches d’administration
-Une structure logique typique comprend :
-OU_Utilisateurs
-OU_Ordinateurs
-OU_Admin
-Cette organisation améliore la lisibilité et la gestion du domaine.
-Comptes et rôles
-* Plusieurs types de comptes sont utilisés :
+---
 
-* Administrateur du domaine
-Compte disposant de privilèges complets sur l’infrastructure.
-Il est utilisé uniquement pour les opérations critiques.
+# File Server Integration
 
-* Compte administrateur
-Compte dédié aux tâches d’administration quotidiennes.
+Le serveur assure également le rôle de serveur de fichiers.
 
-* Administrateur support
-Compte destiné aux opérations de support utilisateur.
-Ses rôles incluent :
-réinitialisation de mots de passe
-gestion des comptes utilisateurs
-assistance aux utilisateurs
-Ce compte possède des droits limités grâce à une délégation de contrôle sur certaines Unités d’Organisation.
-Il ne dispose pas de privilèges complets sur l’infrastructure.
+Objectifs :
 
-* Comptes utilisateurs
-Comptes standards utilisés par les employés.
-Cette séparation permet de limiter les risques liés à l’utilisation de comptes à privilèges élevés.
-Intégration réseau
+- centralisation des données,
+- gestion centralisée des accès,
+- application des permissions NTFS,
+- sécurisation des ressources partagées.
 
-Le contrôleur de domaine est situé dans le réseau SERVEURINTERNE (192.168.10.0/24).
-Les flux nécessaires depuis le réseau UTILISATEUR vers le contrôleur de domaine sont strictement autorisés, notamment :
-Kerberos (88)
-LDAP (389)
-DNS (53)
-RPC (135 + ports dynamiques)
-SMB (445)
-Global Catalog (3268)
-Kerberos password change (464)
+Les accès reposent sur :
 
-Ces communications sont contrôlées par le pare-feu pfSense afin de limiter les accès au strict nécessaire.
-Sécurité
+- les groupes Active Directory,
+- les permissions NTFS,
+- le principe du moindre privilège.
+
+---
+
+# Network Integration
+
+Le contrôleur de domaine est situé dans le réseau :
+
+```text
+192.168.10.0/24
+```
+
+Les flux nécessaires depuis le réseau UTILISATEUR vers le contrôleur de domaine sont strictement contrôlés par pfSense.
+
+Services autorisés :
+
+- Kerberos (88)
+- LDAP (389)
+- DNS (53)
+- RPC (135 + ports dynamiques)
+- SMB (445)
+- Global Catalog (3268)
+- Kerberos Password Change (464)
+
+Cette approche permet de limiter les communications au strict nécessaire.
+
+---
+
+# Security Principles
+
 Plusieurs principes de sécurité sont appliqués :
-isolation du contrôleur de domaine dans un réseau dédié
-contrôle strict des flux réseau
-séparation des comptes administratifs et utilisateurs
-utilisation du DNS Active Directory pour toutes les machines du domaine
-L’accès au contrôleur de domaine est restreint afin de protéger les services critiques de l’infrastructure.
 
-* Limites actuelles
+- séparation des privilèges,
+- isolation du contrôleur de domaine,
+- contrôle strict des flux réseau,
+- segmentation des accès,
+- centralisation de l’authentification,
+- utilisation exclusive du DNS Active Directory.
 
-L’architecture présente certaines limites liées à son caractère pédagogique :
-un seul contrôleur de domaine (pas de redondance)
-absence de haute disponibilité
-serveur de fichiers hébergé sur le même serveur que le contrôleur de domaine (non recommandé en production)
-Ces éléments devraient être améliorés dans un environnement réel.
+L’accès administratif est limité afin de protéger les ressources critiques.
 
-Conclusion
+---
+
+# Current Limitations
+
+Cette infrastructure reste un laboratoire pédagogique et présente certaines limites :
+
+- un seul contrôleur de domaine,
+- absence de redondance,
+- absence de haute disponibilité,
+- serveur de fichiers hébergé sur le contrôleur de domaine.
+
+Ces choix simplifient le laboratoire mais ne correspondent pas aux bonnes pratiques d’un environnement de production réel.
+
+---
+
+# Conclusion
 
 L’architecture Active Directory mise en place permet de centraliser :
-l’authentification
-la gestion des utilisateurs
-la gestion des ressources (fichiers)
-Elle constitue une base solide pour l’implémentation de mécanismes de sécurité avancés tels que les stratégies de groupe (GPO) et le contrôle d’accès.
+
+- l’authentification,
+- la gestion des utilisateurs,
+- la gestion des ordinateurs,
+- les stratégies de sécurité,
+- les ressources partagées.
+
+Elle constitue une base solide pour :
+
+- le déploiement des GPO,
+- le contrôle d’accès,
+- l’administration centralisée,
+- les scénarios offensifs et défensifs du laboratoire SecureTech.
