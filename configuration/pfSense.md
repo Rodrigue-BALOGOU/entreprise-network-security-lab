@@ -231,7 +231,7 @@ Le NAT est configuré afin de permettre aux réseaux internes d’accéder à In
 
 pfSense assure automatiquement la translation d’adresses pour les différents segments réseau.
 
-![NAT Configuration](../screenshots/configuration/pfSense/01-nat-port-forwardding.png)
+![NAT Configuration](../screenshots/configuration/pfSense/01-nat-port-forwadding.png)
 
 ---
 
