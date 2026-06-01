@@ -71,7 +71,7 @@ corp.securetech.local
 
 ### Vérification du domaine
 
-![Nom du domaine](../screenshots/configuration/active-directory/05-domain-name-securetech.png)
+![Nom du domaine](../screenshots/configuration/active-directory/05-domaine-name-securetech.png)
 
 ---
 
@@ -143,7 +143,7 @@ ms-DS-MachineAccountQuota = 0
 
 ### Jonction réussie au domaine
 
-![Domain Join](../screenshots/configuration/active-directory/13-domain-join-success.png)
+![Domain Join](../screenshots/configuration/active-directory/13-domain-join-succes.png)
 
 ### Organisation des ordinateurs
 
@@ -159,13 +159,13 @@ Afin d’éviter que les nouveaux objets soient stockés dans les conteneurs par
 
 ![Redirection ordinateurs](../screenshots/configuration/active-directory/08-capture-redirection-computer.png)
 
-![Default Computer Redirection](../screenshots/configuration/active-directory/24-default-computer-redirection.png)
+![Default Computer Redirection](../screenshots/configuration/active-directory/24-Default-computer-redirection.png)
 
 ### Redirection des utilisateurs
 
 ![Redirection utilisateurs](../screenshots/configuration/active-directory/09-capture-redirection-user.png)
 
-![Default User Redirection](../screenshots/configuration/active-directory/23-default-user-redirection.png)
+![Default User Redirection](../screenshots/configuration/active-directory/23-Default-user-redirection.png)
 
 ---
 
@@ -183,7 +183,7 @@ Les stratégies de groupe permettent de centraliser la configuration et le durci
 
 ### GPO de durcissement
 
-![Hardening Policy](../screenshots/configuration/active-directory/24-gpo-hardening-policy.png)
+![Hardening Policy](../screenshots/configuration/active-directory/24-gpo-hardening-polycy.png)
 
 ### GPO AppLocker
 
@@ -195,7 +195,7 @@ Les stratégies de groupe permettent de centraliser la configuration et le durci
 
 ### Configuration RDP
 
-![RDP](../screenshots/configuration/active-directory/26-rdp-condition-session.png)
+![RDP](../screenshots/configuration/active-directory/26-rdp-condifyration-session.png)
 
 ---
 
