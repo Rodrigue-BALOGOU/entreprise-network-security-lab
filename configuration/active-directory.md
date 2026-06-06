@@ -159,13 +159,12 @@ Afin d’éviter que les nouveaux objets soient stockés dans les conteneurs par
 
 ![Redirection ordinateurs](../screenshots/configuration/active-directory/08-capture-redirection-computer.png)
 
-![Default Computer Redirection](../screenshots/configuration/active-directory/24-Default-computer-redirection.png)
 
 ### Redirection des utilisateurs
 
 ![Redirection utilisateurs](../screenshots/configuration/active-directory/09-capture-redirection-user.png)
 
-![Default User Redirection](../screenshots/configuration/active-directory/23-Default-user-redirection.png)
+
 
 ---
 
