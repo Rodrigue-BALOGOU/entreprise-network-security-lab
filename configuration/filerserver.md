@@ -128,15 +128,15 @@ Plusieurs tests ont été réalisés afin de vérifier le respect des permission
 
 ### Test Effective Access - Partie 1
 
-![Effective Access 1](../screenshots/configuration/fileserver/16-effective-access-test-part1.png)
+![Effective Access 1](../screenshots/configuration/fileserver/16-effective-access--test-part1.png)
 
 ### Test Effective Access - Partie 2
 
-![Effective Access 2](../screenshots/configuration/fileserver/17-effective-access-test-part2.png)
+![Effective Access 2](../screenshots/configuration/fileserver/17-effective-access--test-part2.png)
 
 ### Access Based Enumeration (ABE)
 
-![ABE](screenshots/configuration/fileserver/13-access-based-enumeration.png)
+![ABE](../screenshots/configuration/fileserver/13-access-based-enumeration.png)
 
 L’activation d’Access Based Enumeration permet de masquer automatiquement les dossiers auxquels un utilisateur n’a pas accès.
 
@@ -152,7 +152,7 @@ Les lecteurs réseau sont déployés via Group Policy Preferences.
 
 ### Configuration du Drive Mapping
 
-![Drive Mapping](../screenshots/configuration/fileserver/09-Drive-map-Finance.png)
+![Drive Mapping](../screenshots/configuration/fileserver/09-Drive-map-finance.png)
 
 ### Application de la stratégie après GPUpdate
 
@@ -206,15 +206,15 @@ Le filtrage de fichiers permet d'empêcher le stockage de certains types de fich
 
 ### Modèle utilisé
 
-![Template Details](../screenshots/configuration/fileserver/28-file-screen-template-detail.png)
+![Template Details](../screenshots/configuration/fileserver/28-file-screen-template-details-rapport.png)
 
 ### Configuration du filtrage
 
-![File Screen Template](../screenshots/configuration/fileserver/27-file-screen-template.png)
+![File Screen Template](../screenshots/configuration/fileserver/27-file-screen-template-details-setting.png)
 
 ### Application du filtrage
 
-![File Screen Applied](../screenshots/configuration/fileserver/29-file-screen-template.png)
+![File Screen Applied](../screenshots/configuration/fileserver/29-file-screen-template-details-log-evenement.png)
 
 ### Test de blocage
 
@@ -245,19 +245,19 @@ Afin de permettre la restauration rapide de fichiers supprimés ou modifiés, le
 
 ### Instantanés configurés
 
-![Snapshots](../screenshots/configuration/fileserver/33-shadow-copy-snaps.png)
+![Snapshots](../screenshots/configuration/fileserver/33-shadow-copy-snapshots-list.png)
 
 ### Fichier avant modification
 
-![Avant modification](../screenshots/configuration/fileserver/34-File-before-modification-shadow-copy.png)
+![Avant modification](../screenshots/configuration/fileserver/34-file-before-modification-shadow-copy.png)
 
 ### Versions précédentes disponibles
 
-![Versions précédentes](../screenshots/configuration/fileserver/35-File-before-aftershadow-copy.png)
+![Versions précédentes](../screenshots/configuration/fileserver/35-file-before-aftershadow-copy.png)
 
 ### Restauration depuis une Shadow Copy
 
-![Restauration](../screenshots/configuration/fileserver/36-list-shadow-copy-restaure.png)
+![Restauration](../screenshots/configuration/fileserver/36-list-shadow-copy-restauraution-possible.png)
 
 Cette fonctionnalité améliore significativement la résilience face aux suppressions accidentelles.
 
@@ -269,7 +269,7 @@ Le serveur héberge également le rôle Windows Event Collector.
 
 ### Collecteur WEF
 
-![WEF Collector](../screenshots/configuration/fileserver/37-wef-collector.png)
+![WEF Collector](../screenshots/configuration/fileserver/37-wef-coolector.png)
 
 Les événements provenant :
 
