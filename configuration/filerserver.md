@@ -257,7 +257,7 @@ Afin de permettre la restauration rapide de fichiers supprimés ou modifiés, le
 
 ### Restauration depuis une Shadow Copy
 
-![Restauration](../screenshots/configuration/fileserver/36-list-shadow-copy-restauraution-possible.png)
+![Restauration](../screenshots/configuration/fileserver/36-list-shadow-copy-restauration-possible.png)
 
 Cette fonctionnalité améliore significativement la résilience face aux suppressions accidentelles.
 
