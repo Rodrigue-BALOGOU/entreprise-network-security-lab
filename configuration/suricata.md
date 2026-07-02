@@ -91,7 +91,7 @@ Cette interface représente une cible privilégiée pour un attaquant. Son analy
 
 Le choix de protéger simultanément le WAN et la DMZ permet d'obtenir une meilleure visibilité sur les attaques provenant d'Internet avant qu'elles n'atteignent les ressources internes.
 
-![Configuration des interfaces](../screenshots/configuration/suricata/03-suricata-interface-configuration.png)
+![Configuration des interfaces](../screenshots/configuration/suricata/03-suricata-interface-configuration-ids.png)
 
 ---
 
@@ -242,8 +242,10 @@ Contrairement aux scans TCP, les scans UDP permettent d'identifier les services 
 
 Suricata a correctement identifié cette activité et généré les alertes correspondantes.
 
-![Scan UDP](../screenshots/configuration/suricata/12-scan-udp.png)
+![Scan UDP](../screenshots/configuration/suricata/20-test-nmap-udp-scan.png)
 
+
+![Détection UDP](../screenshots/configuration/suricata/21-alert-scan-udp.png)
 ---
 
 # Scan complet des ports
@@ -254,7 +256,10 @@ Ce type de scan est généralement utilisé afin d'obtenir une cartographie comp
 
 Le trafic généré a immédiatement été détecté par Suricata grâce aux signatures dédiées aux activités de reconnaissance.
 
-![Scan complet](../screenshots/configuration/suricata/13-full-port-scan.png)
+![Scan complet](../screenshots/configuration/suricata/22-test-nampfull-port.png)
+
+
+![Détection complet](../screenshots/configuration/suricata/38-alert-scan-full-port.png)
 
 ---
 
@@ -270,7 +275,10 @@ Ce scénario reproduit une phase avancée de reconnaissance généralement obser
 
 Suricata a détecté cette activité et enregistré les événements associés.
 
-![Scan NSE](../screenshots/configuration/suricata/14-nmap-script-scan.png)
+![Scan NSE](../screenshots/configuration/suricata/27-test-nmap-nse-script-vuln.png)
+
+
+![détection NSE](../screenshots/configuration/suricata/26-alert-nmap-scan-nse-script.png)
 
 ---
 
@@ -282,7 +290,7 @@ Ce scénario permet de vérifier que Suricata inspecte correctement les échange
 
 Les événements générés apparaissent immédiatement dans le journal des alertes.
 
-![Connexion FTP](../screenshots/configuration/suricata/09-ftp-login-test.png)
+![Connexion FTP](../screenshots/configuration/suricata/23-test-ftp-connexion.png)
 
 ---
 
@@ -296,7 +304,9 @@ Cette activité est représentative d'un scénario réel dans lequel un attaquan
 
 Suricata a correctement identifié ce comportement et généré les alertes correspondantes.
 
-![Brute Force FTP](../screenshots/configuration/suricata/10-hydra-bruteforce.png)
+![Brute Force FTP](../screenshots/configuration/suricata/28-brute-force-ftp-hydra-kali.png)
+
+![Détection Force FTP](../screenshots/configuration/suricata/29-alert-in-brute-ftp.png)
 
 ---
 
@@ -368,7 +378,7 @@ Ce mode permet au moteur d'inspecter les paquets directement lors de leur transi
 
 La configuration a été réalisée sur les interfaces protégées afin de reproduire le fonctionnement d'un IPS déployé en environnement de production.
 
-![Configuration du mode Inline](../screenshots/configuration/suricata/06-inline-ips-mode.png)
+![Configuration du mode Inline](../screenshots/configuration/suricata/30-suricata-interface-configuration-ips.png)
 
 ---
 
@@ -404,7 +414,7 @@ Suricata a correctement identifié les comportements malveillants et ajouté aut
 
 Cette fonctionnalité démontre la capacité du moteur à limiter certaines activités malveillantes sans intervention manuelle de l'administrateur.
 
-![Adresse IP bloquée](../screenshots/configuration/suricata/16-blocked-ip.png)
+![Adresse IP bloquée](../screenshots/configuration/suricata/36-alert-block-ip.png)
 
 ---
 
@@ -421,7 +431,7 @@ Cette étape a permis d'étudier :
 
 Cette expérimentation constitue une première approche de l'administration avancée de Suricata.
 
-![Gestion des SID](../screenshots/configuration/suricata/19-sid-management.png)
+![Gestion des SID](../screenshots/configuration/suricata/41-sid-management.png)
 
 ---
 
