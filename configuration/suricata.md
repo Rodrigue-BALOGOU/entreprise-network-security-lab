@@ -318,7 +318,7 @@ Même si ce type de trafic est légitime dans certains contextes, il est fréque
 
 Les signatures activées permettent de journaliser ces événements afin de fournir une visibilité complète sur les activités de reconnaissance.
 
-![Détection ICMP](../screenshots/configuration/suricata/17-icmp-ping-alert.png)
+![Détection ICMP](../screenshots/configuration/suricata/39-icmp-block.png)
 
 ---
 
