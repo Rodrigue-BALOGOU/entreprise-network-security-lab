@@ -417,7 +417,10 @@ La communication avec le serveur de messagerie a été validée avec succès.
 
 Enfin, la réception du courrier électronique confirme le bon fonctionnement de l'ensemble de la chaîne de notification.
 
-![Notification reçue](../screenshots/configuration/monitoring/58-config-sucess-alerte-gmail.png)
+![Notification envoyé](../screenshots/configuration/monitoring/58-config-sucess-alerte-gmail.png)
+
+
+![Notification reçue](../screenshots/configuration/monitoring/62-alerte-email-trigger-stdc01.png)
 
 ---
 
