@@ -1,280 +1,133 @@
-# 📊 Déploiement d'une plateforme de supervision d'entreprise avec Zabbix
+# Déploiement d'une plateforme de supervision avec Zabbix
 
 ## Présentation
 
-La supervision est un élément essentiel d'une infrastructure informatique moderne. Elle permet de surveiller en permanence l'état des serveurs, des équipements réseau et des postes de travail afin de détecter les anomalies avant qu'elles n'affectent les utilisateurs.
+La supervision constitue un pilier essentiel du maintien en conditions opérationnelles d'une infrastructure informatique. Elle permet de suivre en temps réel l'état des équipements, d'anticiper les défaillances et de réduire le temps d'interruption des services grâce à une détection proactive des incidents.
 
-Dans ce projet, j'ai déployé une plateforme complète de supervision basée sur **Zabbix 6.0 LTS** au sein de mon laboratoire d'entreprise **SecureTech**, dans le but de centraliser la surveillance des équipements critiques et de recevoir automatiquement des alertes en cas d'incident.
+Dans le cadre du projet **SecureTech**, une plateforme de supervision basée sur **Zabbix 6.0 LTS** a été déployée afin de centraliser la surveillance des serveurs, du pare-feu et des postes de travail composant l'infrastructure de l'entreprise.
 
-J'ai choisi **Zabbix** pour sa richesse fonctionnelle, son interface moderne, sa simplicité de prise en main et sa large adoption en entreprise. C'est aujourd'hui une solution Open Source incontournable que tout administrateur systèmes et réseaux devrait maîtriser.
+Cette solution permet de collecter les métriques système, de superviser les services critiques, de générer des alertes automatiques et d'informer immédiatement l'administrateur lorsqu'un incident est détecté.
 
 ---
 
 # Objectifs
 
-Les principaux objectifs de ce projet étaient :
+Les objectifs de cette implémentation sont les suivants :
 
-- Déployer un serveur de supervision professionnel.
-- Superviser les serveurs Windows.
-- Superviser le contrôleur de domaine Active Directory.
-- Superviser le pare-feu pfSense.
-- Superviser les postes utilisateurs intégrés au domaine.
-- Mettre en place des tableaux de bord temps réel.
-- Générer des alertes automatiques.
-- Recevoir les notifications par courrier électronique.
-- Détecter les incidents avant les utilisateurs.
+- Déployer une plateforme de supervision centralisée.
+- Superviser les équipements critiques de l'infrastructure.
+- Assurer la disponibilité des services informatiques.
+- Collecter en temps réel les métriques système.
+- Détecter automatiquement les anomalies grâce aux Triggers.
+- Mettre en place un système d'alertes automatiques par courrier électronique.
+- Réduire le temps de détection et de prise en charge des incidents.
+
+---
+
+# Environnement technique
+
+| Composant | Version |
+|-----------|---------|
+| Zabbix Server | 6.0 LTS |
+| Système d'exploitation | Ubuntu Server 22.04 LTS |
+| Contrôleur de domaine | Windows Server 2022 |
+| Pare-feu | pfSense |
+| Messagerie | Gmail SMTP |
+| Authentification | Mot de passe d'application Google |
 
 ---
 
 # Infrastructure supervisée
 
-La plateforme surveille plusieurs composants critiques de l'infrastructure SecureTech.
+La plateforme de supervision couvre l'ensemble des composants critiques du laboratoire SecureTech.
 
-| Equipement | Supervision |
-|------------|-------------|
-| Serveur Zabbix | ✅ |
-| Contrôleur de domaine Windows Server 2022 | ✅ |
-| Pare-feu pfSense | ✅ |
-| Postes Windows du domaine | ✅ |
+| Equipement | Mode de supervision |
+|------------|---------------------|
+| Serveur Zabbix | Zabbix Agent |
+| Contrôleur de domaine | Zabbix Agent |
+| Serveur de fichiers | Zabbix Agent |
+| Serveur WSUS | Zabbix Agent |
+| Pare-feu pfSense | Zabbix Agent |
+| Poste RH | Zabbix Agent |
+| Poste IT | Zabbix Agent |
+| Poste Finance | Zabbix Agent |
 
-Chaque machine communique avec le serveur Zabbix grâce au **Zabbix Agent**, tandis que pfSense est supervisé à l'aide de l'agent Zabbix adapté à FreeBSD.
-
----
-
-# Déploiement du serveur Zabbix
-
-Installation du serveur Zabbix.
-
-![](screenshots/configuration/01-install-zabbix.png)
-
-Configuration initiale.
-
-![](screenshots/configuration/03-config1-zabbix-installation.png)
-
-Création des groupes d'hôtes.
-
-![](screenshots/configuration/04-host-groups1.png)
-
-![](screenshots/configuration/05-host-groups2.png)
+Les agents Zabbix déployés sur les différents systèmes remontent automatiquement les informations de supervision vers le serveur Zabbix afin d'assurer une visibilité centralisée de l'ensemble de l'infrastructure.
 
 ---
 
-# Déploiement des agents
+# Architecture de supervision
 
-Les agents Zabbix ont été installés sur l'ensemble des systèmes supervisés afin de remonter les métriques en temps réel.
+La figure suivante présente la cartographie complète de l'infrastructure supervisée.
 
-Installation du service.
+> Capture n°20 — Carte de supervision Zabbix
 
-![](screenshots/configuration/07-zabbix-agent-service.png)
+```markdown
+![Architecture de supervision](screenshots/configuration/20-map-architecture.png)
+```
 
-Configuration de l'agent.
-
-![](screenshots/configuration/08-agent-configuration.png)
-
-Déploiement sur Windows Server.
-
-![](screenshots/configuration/34-install-agent-winserver.png)
-
-Configuration finale.
-
-![](screenshots/configuration/35-config-agentzabbix-winserver.png)
-
-Intégration du contrôleur de domaine.
-
-![](screenshots/configuration/36-dashboard-zabbix-up-with-dc-join.png)
+Cette vue permet de visualiser rapidement l'état des différents équipements supervisés ainsi que leur disponibilité au sein de l'infrastructure.
 
 ---
 
-# Supervision du pare-feu pfSense
+# Déploiement de la plateforme
 
-Le pare-feu constitue un composant critique de l'architecture réseau. Il est supervisé afin de contrôler en permanence sa disponibilité et ses performances.
+Le déploiement de la plateforme de supervision a été réalisé progressivement afin de garantir un fonctionnement stable de chaque composant avant l'intégration des équipements.
 
-Configuration de l'hôte.
+Les principales étapes réalisées sont les suivantes :
 
-![](screenshots/configuration/06-pfsense-host-configuration.png)
-
-Installation de l'agent.
-
-![](screenshots/configuration/37-INSTALL-AGENT-ZABBIX-PFSENSE.png)
-
-Validation de la connexion.
-
-![](screenshots/configuration/38-Conf-hote-pfsense-zabbix.png)
-
-Connexion réussie.
-
-![](screenshots/configuration/39-confsuccessful-zabbix-dmz.png)
+- Installation du serveur Zabbix.
+- Configuration initiale de la plateforme.
+- Création des groupes d'hôtes.
+- Ajout des équipements à superviser.
+- Déploiement des agents Zabbix.
+- Vérification de la communication entre les agents et le serveur.
+- Mise en place des tableaux de bord.
+- Création des déclencheurs.
+- Configuration des notifications par courrier électronique.
 
 ---
 
-# Création des déclencheurs (Triggers)
+## Installation du serveur Zabbix
 
-Plusieurs déclencheurs personnalisés ont été créés afin de détecter automatiquement les incidents.
+La première étape consiste à installer le serveur Zabbix sur Ubuntu Server puis à effectuer la configuration initiale de la plateforme.
 
-Création d'un trigger.
+> Installation du serveur
 
-![](screenshots/configuration/40-create-triggers1.png)
+```markdown
+![Installation](../screenshots/configuration/01-install-zabbix.png)
+```
 
-Ajout du déclencheur.
+Une fois l'installation terminée, l'assistant de configuration permet de finaliser les paramètres de connexion à la base de données ainsi que la configuration générale du serveur.
 
-![](screenshots/configuration/41-trigger-add-success.png)
+> Configuration initiale
 
-Détection d'une indisponibilité.
+```markdown
+![Configuration initiale](../screenshots/configuration/02-installation-zabbix.png)
+```
 
-![](screenshots/configuration/42-triggers-uptime.png)
+```markdown
+![Assistant de configuration](../screenshots/configuration/03-config1-zabbix-installation.png)
+```
 
-Surveillance mémoire.
-
-![](screenshots/configuration/43-trigger-memory-condition.png)
-
-Détection d'une consommation mémoire élevée.
-
-![](screenshots/configuration/44-trigger-memory-utilisation.png)
-
-Surveillance des services Windows.
-
-![](screenshots/configuration/45-trigger-server-restart.png)
-
-Exemple de trigger personnalisé.
-
-![](screenshots/configuration/46-template-exemple-create.png)
-
-Détection automatique d'un service arrêté.
-
-![](screenshots/configuration/47-trigger-active-directory-stop-running.png)
+L'installation est ensuite validée par l'accès à l'interface Web de Zabbix.
 
 ---
 
-# Tableaux de bord
+## Organisation des hôtes
 
-Les tableaux de bord permettent d'obtenir une vision globale de l'état de l'infrastructure.
+Avant l'intégration des équipements, les groupes d'hôtes ont été créés afin de structurer la supervision selon les différents rôles présents dans l'infrastructure.
 
-Vue générale.
+Cette organisation facilite l'administration, l'application des modèles (Templates) ainsi que la gestion des alertes.
 
-![](screenshots/configuration/10-probleme-dashboard1.png)
+> Création des groupes
 
-Tableau de bord avancé.
+```markdown
+![Groupes d'hôtes](../screenshots/configuration/04-host-groups1.png)
+```
 
-![](screenshots/configuration/11-probleme-dashboard2.png)
+```markdown
+![Groupes d'hôtes](../screenshots/configuration/05-host-groups2.png)
+```
 
-Nouveau Dashboard.
-
-![](screenshots/configuration/32-dashboard-zabbix-new.png)
-
----
-
-# Graphiques de supervision
-
-Les métriques sont collectées en temps réel.
-
-Utilisation CPU.
-
-![](screenshots/configuration/13-cpu-usage-graph.png)
-
-Mémoire.
-
-![](screenshots/configuration/13-memory-utilisation.png)
-
-Trafic réseau.
-
-![](screenshots/configuration/14-network-traffic-graph.png)
-
-Occupation disque.
-
-![](screenshots/configuration/15-disk-usage-graph.png)
-
----
-
-# Notifications par courrier électronique
-
-Afin d'assurer une détection proactive des incidents, une notification automatique a été configurée via Gmail SMTP.
-
-Configuration SMTP.
-
-![](screenshots/configuration/48-config-alerte-smtp.png)
-
-Configuration des utilisateurs.
-
-![](screenshots/configuration/49-user-config-alerte.png)
-
-Association du média.
-
-![](screenshots/configuration/50-config-okay-alerte-user.png)
-
-Test du message.
-
-![](screenshots/configuration/51-test-message.png)
-
-Configuration utilisateur.
-
-![](screenshots/configuration/52-config-user.png)
-
-Action de notification.
-
-![](screenshots/configuration/56-config-action-trigger.png)
-
-Configuration du média Gmail.
-
-![](screenshots/configuration/56-config-ssmtp.png)
-
-Validation.
-
-![](screenshots/configuration/57-connected-okay.png)
-
-Notification reçue.
-
-![](screenshots/configuration/58-config-success-alerte-gmail.png)
-
----
-
-# Difficultés rencontrées
-
-Durant le projet, plusieurs difficultés techniques ont été rencontrées :
-
-- Blocage des connexions SMTP par Suricata lors des tests.
-- Port TCP 587 initialement bloqué sur pfSense.
-- Configuration des mots de passe d'application Gmail.
-- Association du média de notification au compte administrateur.
-- Validation de l'ensemble de la chaîne Trigger → Action → Notification.
-
-Ces problèmes ont été diagnostiqués puis corrigés jusqu'à obtenir un système de notification entièrement fonctionnel.
-
----
-
-# Résultats obtenus
-
-À l'issue du projet, la plateforme permet désormais :
-
-- Une supervision centralisée de l'infrastructure.
-- Une visibilité temps réel des équipements.
-- Une détection proactive des incidents.
-- La surveillance des performances des serveurs.
-- Le suivi des ressources système.
-- Des tableaux de bord dynamiques.
-- L'envoi automatique d'alertes par courrier électronique.
-- Une réduction du temps de détection des pannes.
-
----
-
-# Compétences acquises
-
-- Déploiement de Zabbix 6 LTS
-- Administration Linux
-- Supervision Windows
-- Supervision pfSense
-- Déploiement des agents Zabbix
-- Création de Templates
-- Création de Triggers
-- Création d'Actions
-- Configuration SMTP
-- Dépannage réseau
-- Analyse des incidents
-- Supervision d'une infrastructure Active Directory
-
----
-
-## Conclusion
-
-Ce projet m'a permis de mettre en œuvre une plateforme de supervision complète, proche d'un environnement d'entreprise. Au-delà du déploiement technique, il m'a conduit à résoudre plusieurs problématiques réelles liées à la supervision, à la configuration des notifications et au diagnostic d'incidents.
-
-La plateforme obtenue offre une surveillance centralisée, une détection proactive des anomalies et une capacité d'alerte automatique, contribuant ainsi à améliorer la disponibilité et la fiabilité de l'infrastructure informatique.
+Une fois cette étape terminée, l'infrastructure est prête à recevoir les différents équipements qui seront supervisés par Zabbix.
