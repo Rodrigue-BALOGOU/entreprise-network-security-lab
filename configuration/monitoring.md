@@ -181,6 +181,84 @@ Le tableau de bord permet de vérifier la disponibilité des hôtes, les inciden
 
 Une seconde vue permet d'obtenir davantage de détails sur les événements remontés par la plateforme.
 
-![Vue détaillée des problèmes](../screenshots/configuration/monitoring/11-probleme-dashboard2.png)
+![Vue détaillée des problèmes](../screenshots/configuration/monitoring/11-problem-dashboard2.png)
 
 Les premiers résultats confirment le bon fonctionnement de la communication entre les agents et le serveur Zabbix, garantissant ainsi une supervision centralisée de l'infrastructure.
+
+## Supervision des équipements
+
+Une fois les agents déployés et les différents équipements enregistrés, Zabbix commence automatiquement la collecte des métriques système. Les données sont centralisées sur le serveur de supervision afin d'offrir une vision globale de l'état de l'infrastructure.
+
+Les informations remontées permettent notamment de suivre :
+
+- la disponibilité des hôtes ;
+- l'utilisation du processeur (CPU) ;
+- l'utilisation de la mémoire vive (RAM) ;
+- l'occupation des disques ;
+- le trafic réseau ;
+- le temps de fonctionnement (Uptime) ;
+- l'état des principaux services.
+
+Cette supervision continue facilite la détection des anomalies avant qu'elles n'affectent les utilisateurs ou les services de l'entreprise.
+
+---
+
+## Tableau de bord
+
+Le tableau de bord constitue le point central de supervision. Il permet à l'administrateur d'obtenir une vue synthétique de l'ensemble de l'infrastructure, des événements en cours ainsi que des équipements nécessitant une intervention.
+
+![Tableau de bord principal](../screenshots/configuration/monitoring/32-dashboard-zabbix-new.png)
+
+Les widgets permettent d'afficher les événements récents, la disponibilité des hôtes, les incidents ouverts ainsi que les indicateurs de performance les plus importants.
+
+---
+
+## Visualisation des performances
+
+Les graphiques générés automatiquement par Zabbix permettent d'analyser l'évolution des ressources système et de détecter rapidement toute variation inhabituelle.
+
+### Utilisation du processeur
+
+Le suivi de la charge processeur permet d'identifier les périodes de forte activité pouvant impacter les performances des serveurs.
+
+![Utilisation du processeur](../screenshots/configuration/monitoring/13-cpu-usage-graph.png)
+
+### Utilisation de la mémoire
+
+La supervision de la mémoire permet d'anticiper les situations de saturation susceptibles de dégrader les performances des systèmes.
+
+![Utilisation de la mémoire](../screenshots/configuration/monitoring/13-memory-utilisation.png)
+
+### Utilisation du stockage
+
+Le suivi de l'espace disque permet d'identifier les volumes proches de la saturation et d'intervenir avant toute interruption de service.
+
+![Utilisation du disque](../screenshots/configuration/monitoring/15-disk-usage-graph.png)
+
+### Trafic réseau
+
+Les graphiques réseau offrent une visibilité sur les volumes de données échangés et facilitent l'identification d'éventuelles anomalies ou pics de trafic.
+
+![Trafic réseau](../screenshots/configuration/monitoring/14-network-traffic-graph.png)
+
+---
+
+## Disponibilité de l'infrastructure
+
+La plateforme contrôle en permanence la disponibilité des différents équipements supervisés. Chaque changement d'état est immédiatement enregistré et présenté à l'administrateur.
+
+Cette surveillance continue constitue la première ligne de détection des incidents et permet de réduire significativement le temps de réaction lors d'une indisponibilité.
+
+![Disponibilité des hôtes](../screenshots/configuration/monitoring/10-host-availability.png)
+
+---
+
+## Cartographie de l'infrastructure
+
+Afin de faciliter l'exploitation quotidienne de la plateforme, une carte de supervision a été mise en place. Elle offre une représentation graphique des principaux équipements de l'infrastructure et de leur état de fonctionnement.
+
+Cette vue permet d'identifier rapidement un équipement indisponible et de localiser son emplacement dans l'architecture.
+
+![Carte de supervision](../screenshots/configuration/monitoring/20-maps-drive-zabbix.png)
+
+La cartographie complète la supervision classique en apportant une vision globale de l'environnement surveillé et constitue un outil précieux lors des opérations d'exploitation et de diagnostic.
