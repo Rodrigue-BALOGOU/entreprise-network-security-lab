@@ -249,7 +249,7 @@ La plateforme contrôle en permanence la disponibilité des différents équipem
 
 Cette surveillance continue constitue la première ligne de détection des incidents et permet de réduire significativement le temps de réaction lors d'une indisponibilité.
 
-![Disponibilité des hôtes](../screenshots/configuration/monitoring/10-host-availability.png)
+![Disponibilité des hôtes](../screenshots/configuration/monitoring/10-host-availabily.png)
 
 ---
 
