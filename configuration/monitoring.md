@@ -62,9 +62,9 @@ La figure suivante présente la cartographie complète de l'infrastructure super
 
 — Carte de supervision Zabbix
 
-```markdown
+
 ![Architecture de supervision](../screenshots/configuration/20-maps-drive-zabbix.png)
-```
+
 
 Cette vue permet de visualiser rapidement l'état des différents équipements supervisés ainsi que leur disponibilité au sein de l'infrastructure.
 
