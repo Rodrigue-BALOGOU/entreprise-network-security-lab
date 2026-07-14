@@ -262,3 +262,88 @@ Cette vue permet d'identifier rapidement un équipement indisponible et de local
 ![Carte de supervision](../screenshots/configuration/monitoring/20-maps-drive-zabbix.png)
 
 La cartographie complète la supervision classique en apportant une vision globale de l'environnement surveillé et constitue un outil précieux lors des opérations d'exploitation et de diagnostic.
+
+
+## Intégration des serveurs Windows
+
+Après la mise en place de la plateforme de supervision, les serveurs Windows de l'infrastructure ont été intégrés afin d'assurer une surveillance continue de leur disponibilité et de leurs performances.
+
+Le contrôleur de domaine, le serveur de fichiers ainsi que le serveur WSUS communiquent avec le serveur Zabbix grâce au Zabbix Agent. Cette approche permet de collecter en temps réel les métriques système et d'assurer un suivi permanent des ressources critiques.
+
+### Installation du Zabbix Agent
+
+L'installation du Zabbix Agent constitue la première étape de l'intégration des serveurs Windows à la plateforme de supervision.
+
+![Installation du Zabbix Agent](../screenshots/configuration/monitoring/34-install-agent-winserver.png)
+
+Une fois installé, l'agent est configuré afin d'autoriser les communications avec le serveur Zabbix et d'identifier correctement l'hôte au sein de la plateforme.
+
+![Configuration du Zabbix Agent](../screenshots/configuration/monitoring/35-config-agentzabbix-winserver.png)
+
+Après validation de la configuration, le serveur apparaît comme disponible dans le tableau de bord.
+
+![Serveur supervisé](../screenshots/configuration/monitoring/36-dashboard-zabbix-up-with-dc-join.png)
+
+---
+
+## Supervision du pare-feu pfSense
+
+Le pare-feu pfSense représente un composant stratégique de l'infrastructure. Sa supervision permet de contrôler sa disponibilité ainsi que son état de fonctionnement afin d'assurer la continuité des services réseau.
+
+L'intégration repose sur le modèle **FreeBSD by Zabbix Agent**, adapté au système d'exploitation utilisé par pfSense.
+
+![Installation de l'agent sur pfSense](../screenshots/configuration/monitoring/37-INSTALL-AGENT-ZABBIX-PFSENSE.png)
+
+Une fois le pare-feu enregistré, Zabbix commence automatiquement la collecte des informations de supervision.
+
+![Configuration de l'hôte pfSense](../screenshots/configuration/monitoring/38-Conf-hote-pfsense-zabbix.png)
+
+La communication entre le serveur Zabbix et pfSense est ensuite validée afin de garantir une supervision fiable.
+
+![Validation de la communication](../screenshots/configuration/monitoring/39-confsuccessful-zabbix-dmz.png)
+
+---
+
+## Mise en place des Triggers
+
+Les Triggers constituent le mécanisme de détection des incidents au sein de Zabbix. Ils permettent de définir des conditions de surveillance et de générer automatiquement un événement lorsqu'un seuil critique est atteint.
+
+Dans ce projet, plusieurs déclencheurs ont été configurés afin de superviser les composants essentiels de l'infrastructure.
+
+La création d'un Trigger débute par la définition de la condition à surveiller.
+
+![Création d'un Trigger](../screenshots/configuration/monitoring/40-create-triggers1.png)
+
+Une fois enregistré, le Trigger devient immédiatement opérationnel.
+
+![Validation du Trigger](../screenshots/configuration/monitoring/41-trigger-add-success.png)
+
+Les premiers tests ont permis de vérifier le bon fonctionnement de la détection des incidents.
+
+![Détection d'un incident](../screenshots/configuration/monitoring/42-triggers-uptime.png)
+
+---
+
+## Supervision des ressources système
+
+En complément de la disponibilité des équipements, plusieurs Triggers ont été configurés afin de surveiller l'utilisation des ressources système.
+
+La consommation de la mémoire est contrôlée en permanence afin de détecter toute situation de saturation susceptible d'impacter les performances.
+
+![Trigger mémoire](../screenshots/configuration/monitoring/43-trigger-memory-condition.png)
+
+Une alerte est générée dès que le seuil défini est dépassé.
+
+![Détection d'une utilisation mémoire élevée](../screenshots/configuration/monitoring/44-trigger-memory-utilisation.png)
+
+Le redémarrage inattendu d'un serveur constitue également un événement critique nécessitant une intervention rapide.
+
+![Trigger de redémarrage](../screenshots/configuration/monitoring/45-trigger-server-restart.png)
+
+Enfin, la supervision des services Windows permet de détecter automatiquement l'arrêt d'un service essentiel, notamment ceux liés au fonctionnement de l'Active Directory.
+
+![Exemple de Trigger personnalisé](../screenshots/configuration/monitoring/46-template-exemple-create.png)
+
+![Détection de l'arrêt d'un service Active Directory](../screenshots/configuration/monitoring/47-trigger-active-directory-stop-running.png)
+
+Grâce à cette configuration, la plateforme est désormais capable d'identifier automatiquement les principaux incidents pouvant affecter la disponibilité de l'infrastructure avant qu'ils ne deviennent critiques.
