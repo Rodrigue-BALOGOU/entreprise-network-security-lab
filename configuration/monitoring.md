@@ -344,6 +344,125 @@ Enfin, la supervision des services Windows permet de détecter automatiquement l
 
 ![Exemple de Trigger personnalisé](../screenshots/configuration/monitoring/46-template-exemple-create.png)
 
-![Détection de l'arrêt d'un service Active Directory](../screenshots/configuration/monitoring/47-trigger-active-directory-stop-running.png)
+![Détection de l'arrêt d'un service Active Directory](../screenshots/configuration/monitoring/47-triger-active-directory-stop-running.png)
 
 Grâce à cette configuration, la plateforme est désormais capable d'identifier automatiquement les principaux incidents pouvant affecter la disponibilité de l'infrastructure avant qu'ils ne deviennent critiques.
+
+
+## Mise en place des notifications
+
+La détection d'un incident n'est réellement efficace que si l'administrateur en est informé rapidement. Afin d'automatiser cette étape, un système de notification par courrier électronique a été mis en place.
+
+L'objectif était de transmettre automatiquement une alerte lorsqu'un Trigger passe à l'état **PROBLEM**, permettant ainsi une intervention rapide sans nécessiter une surveillance permanente du tableau de bord.
+
+---
+
+## Configuration du serveur SMTP
+
+La première étape a consisté à configurer le serveur SMTP utilisé pour l'envoi des notifications.
+
+Dans le cadre de ce projet, un compte Gmail dédié a été retenu pour assurer l'envoi des messages.
+
+![Configuration du serveur SMTP](../screenshots/configuration/monitoring/48-config-alerte-smtp.png)
+
+---
+
+## Configuration des utilisateurs
+
+Une fois le serveur SMTP configuré, un média de notification a été associé au compte administrateur afin d'autoriser la réception des alertes.
+
+![Configuration des utilisateurs](../screenshots/configuration/monitoring/49-user-config-alerte*.png)
+
+L'association correcte du média avec le compte utilisateur est indispensable pour permettre l'envoi des notifications.
+
+![Association du média](../screenshots/configuration/monitoring/50-config-okay-alerte-user.png)
+
+---
+
+## Validation du système de messagerie
+
+Avant la mise en production, plusieurs tests ont été réalisés afin de vérifier le bon fonctionnement de la chaîne de notification.
+
+Un premier message de test a permis de contrôler la communication entre le serveur Zabbix et le serveur SMTP.
+
+![Envoi d'un message de test](../screenshots/configuration/monitoring/51-test-message.png)
+
+Les paramètres du compte utilisateur ont ensuite été vérifiés afin de confirmer que les notifications seraient correctement transmises.
+
+![Configuration du compte utilisateur](../screenshots/configuration/monitoring/52-config-user.png)
+
+---
+
+## Configuration des actions
+
+Les Actions constituent le lien entre les Triggers et les notifications.
+
+Lorsqu'un Trigger détecte une anomalie, une Action est automatiquement exécutée afin de transmettre un courrier électronique à l'administrateur.
+
+![Configuration des Actions](../screenshots/configuration/monitoring/56-config-action-trigger.png)
+
+Cette automatisation permet de réduire considérablement le délai de prise en charge d'un incident.
+
+---
+
+## Validation des notifications
+
+Après la configuration des Actions, plusieurs essais ont été réalisés afin de vérifier la transmission effective des alertes.
+
+![Validation de la configuration SMTP](../screenshots/configuration/monitoring/56-config-ssmtp.png)
+
+La communication avec le serveur de messagerie a été validée avec succès.
+
+![Connexion réussie](../screenshots/configuration/monitoring/57-connected-okay.png)
+
+Enfin, la réception du courrier électronique confirme le bon fonctionnement de l'ensemble de la chaîne de notification.
+
+![Notification reçue](../screenshots/configuration/monitoring/58-config-success-alerte-gmail.png)
+
+---
+
+## Difficultés rencontrées
+
+Le déploiement du système de notification a nécessité plusieurs phases de diagnostic avant d'obtenir un fonctionnement pleinement opérationnel.
+
+Les principales difficultés rencontrées ont été les suivantes :
+
+- configuration initiale du serveur SMTP ;
+- installation et configuration du paquet **ssmtp** sur le serveur Ubuntu afin de valider le fonctionnement de la messagerie ;
+- utilisation d'un mot de passe d'application Google, le mot de passe du compte Gmail n'étant pas accepté ;
+- blocage des connexions SMTP (TCP/587) par le pare-feu pfSense ;
+- détection et blocage des communications SMTP par Suricata lors des phases de test ;
+- configuration des médias utilisateurs et des Actions de notification dans Zabbix.
+
+Chaque problème a été identifié à l'aide des journaux système, des tests de connectivité et des outils de diagnostic jusqu'à l'obtention d'une chaîne de notification entièrement fonctionnelle.
+
+---
+
+## Résultats obtenus
+
+À l'issue du projet, la plateforme de supervision est pleinement opérationnelle.
+
+Les objectifs fixés en début de projet ont été atteints :
+
+- supervision centralisée des équipements de l'infrastructure ;
+- surveillance en temps réel des serveurs, du pare-feu et des postes utilisateurs ;
+- collecte continue des métriques système ;
+- détection automatique des incidents grâce aux Triggers ;
+- génération d'événements en temps réel ;
+- envoi automatique des notifications par courrier électronique ;
+- amélioration de la réactivité face aux incidents ;
+- réduction du temps de détection des défaillances.
+
+Cette plateforme constitue désormais un composant essentiel de l'infrastructure SecureTech et apporte une visibilité complète sur l'état des services informatiques.
+
+---
+
+## Conclusion
+
+Le déploiement de Zabbix a permis d'intégrer une solution de supervision moderne au sein de l'environnement SecureTech.
+
+Au-delà de l'installation de la plateforme, ce projet a nécessité la mise en œuvre d'une architecture complète de supervision, le déploiement d'agents sur différents systèmes, la conception de déclencheurs adaptés aux besoins de l'infrastructure ainsi que la mise en place d'un mécanisme d'alerte automatisé.
+
+Les difficultés rencontrées lors de la configuration des notifications SMTP, de l'intégration de Gmail, du pare-feu pfSense et de Suricata ont également permis d'approfondir les compétences en diagnostic et en résolution d'incidents dans un contexte proche des environnements d'entreprise.
+
+Cette réalisation constitue une étape importante dans la construction du laboratoire SecureTech et servira de base pour l'intégration de nouveaux composants de sécurité, notamment la corrélation des événements de Suricata avec la plateforme de supervision.
