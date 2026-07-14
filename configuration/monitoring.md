@@ -60,11 +60,11 @@ Les agents Zabbix déployés sur les différents systèmes remontent automatique
 
 La figure suivante présente la cartographie complète de l'infrastructure supervisée.
 
-— Carte de supervision Zabbix
+- Carte de supervision Zabbix
 
-```
+
 ![Architecture de supervision](../screenshots/configuration/monitoring/20-maps-drive-zabbix.png)
-```
+
 
 Cette vue permet de visualiser rapidement l'état des différents équipements supervisés ainsi que leur disponibilité au sein de l'infrastructure.
 
@@ -94,21 +94,15 @@ La première étape consiste à installer le serveur Zabbix sur Ubuntu Server pu
 
 > Installation du serveur
 
-```markdown
-![Installation](../screenshots/configuration/01-install-zabbix.png)
-```
+
+![Installation]../screenshots/configuration/monitoring/01-install-zabbix.png)
 
 Une fois l'installation terminée, l'assistant de configuration permet de finaliser les paramètres de connexion à la base de données ainsi que la configuration générale du serveur.
 
 > Configuration initiale
 
-```markdown
-![Configuration initiale](../screenshots/configuration/02-installation-zabbix.png)
-```
+![Assistant de configuration](../screenshots/configuration/monitoring/03-config1-zabbix-installation.png)
 
-```markdown
-![Assistant de configuration](../screenshots/configuration/03-config1-zabbix-installation.png)
-```
 
 L'installation est ensuite validée par l'accès à l'interface Web de Zabbix.
 
@@ -122,12 +116,71 @@ Cette organisation facilite l'administration, l'application des modèles (Templa
 
 > Création des groupes
 
-```markdown
-![Groupes d'hôtes](../screenshots/configuration/04-host-groups1.png)
-```
 
-```markdown
-![Groupes d'hôtes](../screenshots/configuration/05-host-groups2.png)
-```
+![Groupes d'hôtes](../screenshots/configuration/monitoring/04-host-groups1.png)
+
+
+
+![Groupes d'hôtes](../screenshots/configuration/monitoring/05-host-groups2.png)
 
 Une fois cette étape terminée, l'infrastructure est prête à recevoir les différents équipements qui seront supervisés par Zabbix.
+
+
+## Ajout des hôtes
+
+Après le déploiement du serveur Zabbix, l'étape suivante a consisté à intégrer les différents équipements de l'infrastructure au sein de la plateforme de supervision.
+
+Chaque équipement a été enregistré comme un hôte (Host) en associant son adresse IP, son groupe d'appartenance ainsi que le modèle (Template) correspondant à son système d'exploitation.
+
+Cette organisation permet d'administrer efficacement les équipements supervisés tout en facilitant l'application des règles de supervision.
+
+### Intégration du pare-feu pfSense
+
+Le pare-feu pfSense constitue l'élément central de l'architecture réseau. Sa supervision permet de suivre en permanence sa disponibilité ainsi que ses performances.
+
+La configuration de l'hôte comprend notamment :
+
+- l'adresse IP de gestion ;
+- l'interface de supervision ;
+- le groupe d'hôtes ;
+- le modèle **FreeBSD by Zabbix agent**.
+
+![Configuration de l'hôte pfSense](../screenshots/configuration/monitoring/06-pfsense-host-configuration.png)
+
+Une fois la configuration terminée, le pare-feu est ajouté à la plateforme et devient disponible pour la collecte des métriques.
+
+---
+
+## Déploiement des agents Zabbix
+
+La collecte des informations de supervision repose sur le déploiement du **Zabbix Agent** sur l'ensemble des systèmes à superviser.
+
+L'agent assure la remontée des métriques vers le serveur Zabbix afin de permettre une surveillance continue de l'état des équipements.
+
+Le service est installé puis configuré avec les paramètres du serveur de supervision.
+
+![Installation du service Zabbix Agent](../screenshots/configuration/monitoring/07-zabbix-agent-service.png)
+
+Le fichier de configuration est ensuite adapté afin de définir le serveur Zabbix autorisé, le nom de l'hôte ainsi que les paramètres de communication.
+
+![Configuration du Zabbix Agent](../screenshots/configuration/monitoring/08-agent-configuration.png)
+
+Après le redémarrage du service, la communication entre l'agent et le serveur est validée depuis l'interface Web.
+
+![Validation de la communication](../screenshots/configuration/monitoring/09-conf-path-file-agent-zabbix.png)
+
+---
+
+## Vérification de la supervision
+
+Une fois les premiers équipements intégrés, Zabbix commence à collecter automatiquement les métriques système.
+
+Le tableau de bord permet de vérifier la disponibilité des hôtes, les incidents détectés ainsi que l'état général de l'infrastructure.
+
+![Vue des problèmes détectés](../screenshots/configuration/monitoring/10-probleme-dashboard1.png)
+
+Une seconde vue permet d'obtenir davantage de détails sur les événements remontés par la plateforme.
+
+![Vue détaillée des problèmes](../screenshots/configuration/monitoring/11-probleme-dashboard2.png)
+
+Les premiers résultats confirment le bon fonctionnement de la communication entre les agents et le serveur Zabbix, garantissant ainsi une supervision centralisée de l'infrastructure.
