@@ -375,7 +375,7 @@ Une fois le serveur SMTP configuré, un média de notification a été associé 
 
 L'association correcte du média avec le compte utilisateur est indispensable pour permettre l'envoi des notifications.
 
-![Association du média](../screenshots/configuration/monitoring/50-config-okay-alerte-user.png)
+![Association du média](../screenshots/configuration/monitoring/50-config-okay-allerte-user.png)
 
 ---
 
@@ -399,7 +399,7 @@ Les Actions constituent le lien entre les Triggers et les notifications.
 
 Lorsqu'un Trigger détecte une anomalie, une Action est automatiquement exécutée afin de transmettre un courrier électronique à l'administrateur.
 
-![Configuration des Actions](../screenshots/configuration/monitoring/56-config-action-trigger.png)
+![Configuration des Actions](../screenshots/configuration/monitoring/56-config-action-triggger.png)
 
 Cette automatisation permet de réduire considérablement le délai de prise en charge d'un incident.
 
@@ -417,7 +417,7 @@ La communication avec le serveur de messagerie a été validée avec succès.
 
 Enfin, la réception du courrier électronique confirme le bon fonctionnement de l'ensemble de la chaîne de notification.
 
-![Notification reçue](../screenshots/configuration/monitoring/58-config-success-alerte-gmail.png)
+![Notification reçue](../screenshots/configuration/monitoring/58-config-sucess-alerte-gmail.png)
 
 ---
 
