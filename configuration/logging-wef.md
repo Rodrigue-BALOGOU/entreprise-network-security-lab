@@ -178,6 +178,64 @@ Cette sélection permet de disposer d'une visibilité suffisante pour détecter 
 
 ---
 
+---
+
+## Validation de la collecte des événements de sécurité
+
+Une fois la souscription Windows Event Forwarding opérationnelle, plusieurs scénarios ont été réalisés afin de vérifier la remontée effective des événements vers le serveur collecteur.
+
+L'objectif était de confirmer que les événements critiques générés sur les postes et les serveurs sont correctement centralisés dans le journal **Forwarded Events**.
+
+---
+
+### Authentification réussie (Event ID 4624)
+
+Les ouvertures de session réussies sont correctement collectées par le serveur WEC.
+
+Ces événements permettent de tracer les connexions des utilisateurs et constituent une source d'information essentielle lors des investigations de sécurité.
+
+![Event ID 4624](../screenshots/configuration/logging-wef/31-event-4624.png)
+
+---
+
+### Échec d'authentification (Event ID 4673)
+
+Les tentatives de connexion échouées sont également centralisées.
+
+Ces événements permettent notamment d'identifier :
+
+- les erreurs de saisie répétées ;
+- les tentatives d'accès non autorisées ;
+- les attaques par force brute.
+
+![Event ID 4625](../screenshots/configuration/logging-wef/33-event-4673.png)
+
+---
+
+### Échec de pré-authentification Kerberos (Event ID 4771)
+
+Les événements Kerberos sont remontés automatiquement par Windows Event Forwarding.
+
+L'Event ID **4771** indique un échec de pré-authentification Kerberos et peut révéler :
+
+- un mot de passe incorrect ;
+- une tentative de connexion non autorisée ;
+- une activité suspecte nécessitant une investigation.
+
+La centralisation de ce type d'événement améliore considérablement les capacités de détection des attaques ciblant Active Directory.
+
+![Event ID 4771](../screenshots/configuration/logging-wef/25-event-4771.png)
+
+---
+
+### Validation de la remontée des événements
+
+Les différents tests réalisés confirment que les événements générés sur les postes clients et les serveurs sont correctement transférés vers le serveur **ST-FILESERVER01**.
+
+Cette validation démontre le bon fonctionnement de l'ensemble de la chaîne de collecte mise en place avec Windows Event Forwarding.
+
+![Validation des événements collectés](../screenshots/configuration/logging-wef/21-wef-validation.png)
+
 ## Centralisation des journaux pfSense avec NXLog
 
 En complément des événements Windows, les journaux du pare-feu **pfSense** ont également été intégrés à l'infrastructure de collecte afin d'obtenir une visibilité globale sur les activités réseau.
