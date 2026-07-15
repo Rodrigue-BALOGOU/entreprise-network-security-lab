@@ -14,6 +14,7 @@ Les postes déployés sont les suivants :
 | PC-DIRECTION | Windows 10 Professionnel | Direction |
 | PC-RH | Windows 11 Enterprise | Ressources Humaines |
 | PC-FINANCE | Windows 11 Enterprise | Finance |
+| P-ADMIN | Window 10 Professionnel | Administrateur | 
 
 ---
 
@@ -35,7 +36,7 @@ Ce compte possède uniquement les autorisations nécessaires à l'ajout de nouve
 
 Une fois l'opération terminée, le poste est redémarré afin de finaliser son intégration et d'établir la relation d'approbation avec le contrôleur de domaine.
 
-![Validation de la jointure](../screenshots/configuration/clients/02-domain-join-success.png)
+![Validation de la jointure](../screenshots/configuration/clients/09-machine-sucessfully-join-in-domain.png)
 
 ---
 
@@ -67,7 +68,7 @@ Une redirection a été mise en place à l'aide de la commande **redircmp** afin
 
 Cette organisation facilite l'application des stratégies de groupe ainsi que l'administration quotidienne des postes.
 
-![Configuration de redircmp](../screenshots/configuration/clients/04-redircmp.png)
+![Configuration de redircmp](../screenshots/configuration/clients/08-capture-redirection-computer.png)
 
 Une délégation de contrôle a ensuite été appliquée afin d'autoriser le compte **srv-join** à créer des objets ordinateur uniquement dans cette unité d'organisation.
 
@@ -109,7 +110,7 @@ L'authentification centralisée présente plusieurs avantages :
 
 Les comptes locaux ne sont plus utilisés pour les connexions quotidiennes, ce qui limite les risques liés à une administration décentralisée.
 
-![Connexion avec un compte Active Directory](../screenshots/configuration/clients/08-domain-user-login.png)
+![Connexion avec un compte Active Directory](../screenshots/configuration/clients/33-user-rh-connexion.png)
 
 L'ouverture de session valide le bon fonctionnement de la communication entre le poste client et le contrôleur de domaine.
 
@@ -168,7 +169,7 @@ L'utilisation des GPO permet d'appliquer automatiquement les paramètres défini
 
 Toutes les stratégies sont liées à l'unité d'organisation **Workstations**, garantissant une administration centralisée des quatre postes clients.
 
-![Vue d'ensemble des GPO](../screenshots/configuration/clients/12-gpo-overview.png)
+![Vue d'ensemble des GPO](../screenshots/configuration/clients/35-GPO-Management.png)
 
 ---
 
@@ -208,9 +209,9 @@ Cette restriction est appliquée sur :
 - PC-RH
 - PC-FINANCE
 
-![Blocage de l'invite de commandes](../screenshots/configuration/clients/16-block-cmd.png)
+![Blocage de l'invite de commandes](../screenshots/configuration/clients/23-cmd-blocked.png)
 
-![Blocage de PowerShell](../screenshots/configuration/clients/17-block-powershell.png)
+![Blocage de PowerShell](../screenshots/configuration/clients/24-powershelle-restriction.png)
 
 Cette configuration limite considérablement les possibilités d'exécution de commandes non autorisées.
 
@@ -222,7 +223,7 @@ Le Panneau de configuration permet de modifier de nombreux paramètres système 
 
 Afin d'éviter toute modification non autorisée, son accès est interdit aux utilisateurs standards.
 
-![Restriction du Panneau de configuration](../screenshots/configuration/clients/18-control-panel-block.png)
+![Restriction du Panneau de configuration](../screenshots/configuration/clients/26-control-panel-restriction.png)
 
 Cette mesure contribue à maintenir une configuration homogène sur l'ensemble des postes.
 
@@ -240,7 +241,7 @@ Cette politique permet de limiter les risques liés :
 - à l'introduction de supports infectés ;
 - aux pertes d'informations sensibles.
 
-![Politique de contrôle USB](../screenshots/configuration/clients/19-usb-policy.png)
+![Politique de contrôle USB](../screenshots/configuration/clients/22-gpo-usb-bloc-policy.png)
 
 La restriction est appliquée automatiquement lors de l'ouverture de session grâce aux stratégies de groupe.
 
@@ -260,11 +261,25 @@ Cette stratégie réduit fortement les risques liés :
 - aux applications non approuvées ;
 - à l'exécution de programmes téléchargés par les utilisateurs.
 
-![Configuration d'AppLocker](../screenshots/configuration/clients/20-applocker-policy.png)
+![Configuration d'AppLocker](../screenshots/configuration/clients/27-gpo-applocker.png)
+
+![Configuration d'AppLocker](../screenshots/configuration/clients/28-gpo-applocker-suite.png)
 
 Les postes **PC-IT** et **PC-DIRECTION** ne disposent pas de cette stratégie, leur système d'exploitation ou leur rôle nécessitant une politique différente.
 
 ---
+
+
+![Configuration password](../screenshots/configuration/clients/31-policy-password.png)
+
+parefeu acces interdit 
+
+![firewall](../screenshots/configuration/clients/30-gpo-firewall-window-defender-acces-block.png)
+
+compte verouillé 
+
+![firewall](../screenshots/configuration/clients/32-compte-locked-policy-password.png)
+
 
 # Résultat du durcissement
 
