@@ -14,7 +14,7 @@ Les postes déployés sont les suivants :
 | PC-DIRECTION | Windows 10 Professionnel | Direction |
 | PC-RH | Windows 11 Enterprise | Ressources Humaines |
 | PC-FINANCE | Windows 11 Enterprise | Finance |
-| P-ADMIN | Window 10 Professionnel | Administrateur | 
+| PC-ADMIN | Window 10 Professionnel | Administrateur | 
 
 ---
 
@@ -54,7 +54,7 @@ Cette mesure permet :
 - d'éviter l'ajout non autorisé de machines ;
 - d'améliorer la traçabilité des opérations d'administration.
 
-![Configuration du quota de jointure](../screenshots/configuration/clients/03-machine-account-quota.png)
+![Configuration du quota de jointure](../screenshots/configuration/clients/03-quota.png)
 
 ---
 
