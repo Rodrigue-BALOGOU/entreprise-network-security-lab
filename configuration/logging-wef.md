@@ -93,7 +93,7 @@ Cette approche garantit une configuration homogène sur toutes les machines int�
 
 La première stratégie active automatiquement le service **WinRM** sur les postes clients et serveurs.
 
-![Configuration GPO WinRM](../screenshots/configuration-wef/logging/04-gpo-winrm.png)
+![Configuration GPO WinRM](../screenshots/configuration-wef/logging-wef/04-gpo-winrm.png)
 
 Une seconde stratégie configure le mécanisme **Windows Event Forwarding** afin que les postes connaissent automatiquement le serveur collecteur auquel transmettre leurs événements.
 
