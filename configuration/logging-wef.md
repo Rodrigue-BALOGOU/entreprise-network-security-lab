@@ -19,7 +19,7 @@ L'architecture repose sur les composants suivants :
 
 Cette approche permet de centraliser automatiquement les journaux des serveurs, des postes clients et du pare-feu afin d'améliorer les capacités de supervision et d'analyse des incidents.
 
-![Architecture WEF](../screenshots/configuration/logging/01-wef-architecture.png)
+![Architecture WEF](../screenshots/configuration/logging-wef/01-wef-architecture.png)
 
 ---
 
@@ -69,7 +69,7 @@ La première étape a consisté à activer les services nécessaires au fonction
 
 Le service **Windows Event Collector** a été configuré avec un démarrage automatique afin de garantir la réception des événements après chaque redémarrage du serveur.
 
-![Service Windows Event Collector](../screenshots/configuration/logging/02-wec-services.png)
+![Service Windows Event Collector](../screenshots/configuration/logging-wef/02-wec-services.png)
 
 ---
 
@@ -81,7 +81,7 @@ Le service WinRM a donc été activé sur le serveur afin d'autoriser les commun
 
 Cette étape constitue un prérequis indispensable avant la création des abonnements de collecte.
 
-![Configuration du service WinRM](../screenshots/configuration/logging/03-winrm-services.png)
+![Configuration du service WinRM](../screenshots/configuration/logging-wef/03-winrm-services.png)
 
 ---
 
@@ -93,15 +93,15 @@ Cette approche garantit une configuration homogène sur toutes les machines int�
 
 La première stratégie active automatiquement le service **WinRM** sur les postes clients et serveurs.
 
-![Configuration GPO WinRM](../screenshots/configuration/logging/04-gpo-winrm.png)
+![Configuration GPO WinRM](../screenshots/configuration-wef/logging/04-gpo-winrm.png)
 
 Une seconde stratégie configure le mécanisme **Windows Event Forwarding** afin que les postes connaissent automatiquement le serveur collecteur auquel transmettre leurs événements.
 
-![Configuration de la stratégie Event Forwarding](../screenshots/configuration/logging/05-gpo-event-forwarding.png)
+![Configuration de la stratégie Event Forwarding](../screenshots/configuration/logging-wef/05-gpo-event-forwarding.png)
 
 La politique définit notamment l'adresse du serveur WEC ainsi que les paramètres nécessaires au transport sécurisé des journaux.
 
-![Paramètres de la stratégie Event Forwarding](../screenshots/configuration/logging/06-event-forwarding-policy.png)
+![Paramètres de la stratégie Event Forwarding](../screenshots/configuration/logging-wef/06-event-forwarding-policy.png)
 
 Grâce à cette automatisation, toute nouvelle machine intégrée au domaine reçoit automatiquement la configuration de collecte des événements sans intervention manuelle de l'administrateur.
 
@@ -117,7 +117,7 @@ Le mode **Source-Initiated** a été retenu. Dans cette configuration, ce sont l
 
 Cette méthode facilite considérablement le déploiement dans un environnement Active Directory puisqu'aucune configuration individuelle n'est nécessaire sur chaque poste.
 
-![Type de souscription Source-Initiated](../screenshots/configuration/logging/08-sources-initiated.png)
+![Type de souscription Source-Initiated](../screenshots/configuration/logging-wef/08-sources-initiated.png)
 
 ---
 
@@ -132,11 +132,11 @@ Les principaux paramètres définis sont :
 - Utilisation de WinRM comme protocole de transport
 - Authentification intégrée Active Directory
 
-![Paramètres de la souscription](../screenshots/configuration/logging/09-subscription-settings.png)
+![Paramètres de la souscription](../screenshots/configuration/logging-wef/09-subscription-settings.png)
 
 Après validation de la configuration, la souscription devient active et attend les connexions des machines clientes.
 
-![Souscription active](../screenshots/configuration/logging/10-subscription-active.png)
+![Souscription active](../screenshots/configuration/logging-wef/10-subscription-active.png)
 
 ---
 
@@ -150,13 +150,13 @@ Cette étape permet notamment de confirmer :
 - que le serveur WEC écoute les connexions entrantes ;
 - que les machines du domaine peuvent transmettre leurs événements.
 
-![État de la souscription](../screenshots/configuration/logging/13-details-status-subscriptions.png)
+![État de la souscription](../screenshots/configuration/logging-wef/13-details-status-subscriptions.png)
 
 Une fois les premières machines connectées, les événements apparaissent automatiquement dans l'Observateur d'événements du serveur collecteur.
 
 Le journal **Forwarded Events** devient alors le point central de consultation de tous les événements remontés par les différents serveurs et postes clients.
 
-![Observateur d'événements - Forwarded Events](../screenshots/configuration/logging/11-event-viewer-forwarding.png)
+![Observateur d'événements - Forwarded Events](../screenshots/configuration/logging-wef/11-event-viewer-forwarding.png)
 
 ---
 
@@ -174,7 +174,7 @@ Les catégories collectées comprennent notamment :
 
 Cette sélection permet de disposer d'une visibilité suffisante pour détecter les incidents de sécurité, les erreurs système ainsi que les activités d'administration.
 
-![Journal Security collecté](../screenshots/configuration/logging/12-security-events.png)
+![Journal Security collecté](../screenshots/configuration/logging-wef/12-security-events.png)
 
 ---
 
@@ -201,7 +201,7 @@ Les principaux journaux envoyés comprennent :
 
 Cette configuration permet de superviser l'activité du pare-feu sans avoir à consulter directement son interface d'administration.
 
-![Configuration Syslog pfSense](../screenshots/configuration/logging/16-pfsense-syslog.png)
+![Configuration Syslog pfSense](../screenshots/configuration/logging-wef/16-pfsense-syslog.png)
 
 ---
 
@@ -211,11 +211,11 @@ Le serveur **ST-FILESERVER01** héberge également **NXLog**, chargé de traiter
 
 NXLog assure la lecture des fichiers de journalisation puis les centralise sur le serveur afin qu'ils puissent être consultés avec les événements Windows.
 
-![Configuration NXLog](../screenshots/configuration/logging/18-nxlogs-configuration.png)
+![Configuration NXLog](../screenshots/configuration/logging-wef/18-nxlogs-configuration.png)
 
 Après installation, le service NXLog a été activé et configuré pour démarrer automatiquement avec le système.
 
-![Service NXLog](../screenshots/configuration/logging/19-nxlogs-services.png)
+![Service NXLog](../screenshots/configuration/logging-wef/19-nxlogs-services.png)
 
 ---
 
@@ -225,11 +225,11 @@ Une fois la communication établie entre pfSense et le serveur de collecte, les 
 
 Cette validation confirme le bon fonctionnement de la chaîne de collecte des événements réseau.
 
-![Réception des journaux pfSense](../screenshots/configuration/logging/20-logs-pfsense-receiver.png)
+![Réception des journaux pfSense](../screenshots/configuration/logging-wef/20-logs-pfsense-receiver.png)
 
 La collecte des événements Windows et des journaux réseau est désormais centralisée sur **ST-FILESERVER01**, offrant un point unique de supervision et d'analyse.
 
-![Validation du fonctionnement WEF](../screenshots/configuration/logging/21-wef-validation.png)
+![Validation du fonctionnement WEF](../screenshots/configuration/logging-wef/21-wef-validation.png)
 
 ---
 
@@ -250,15 +250,15 @@ Chaque anomalie a été analysée à l'aide des journaux système, des commandes
 
 Les différentes corrections ont permis d'obtenir une infrastructure de collecte stable et entièrement opérationnelle.
 
-![Erreur NXLog](../screenshots/configuration/logging/26-error-verify-file-nxlog.png)
+![Erreur NXLog](../screenshots/configuration/logging-wef/26-error-verify-file-nxlog.png)
 
-![Configuration WEF avec PowerShell](../screenshots/configuration/logging/27-config-wef-powershell-event-forwarding.png)
+![Configuration WEF avec PowerShell](../screenshots/configuration/logging-wef/27-config-wef-powershell-event-forwarding.png)
 
-![Configuration des règles NXLog](../screenshots/configuration/logging/28-rule-nxlog-windowdefine-powershell.png)
+![Configuration des règles NXLog](../screenshots/configuration/logging-wef/28-rule-nxlog-windowdefine-powershell.png)
 
-![Validation des modules NXLog](../screenshots/configuration/logging/29-module-absent-nxlog.png)
+![Validation des modules NXLog](../screenshots/configuration/logging-wef/29-module-absent-nxlog.png)
 
-![Validation WEF via PowerShell](../screenshots/configuration/logging/30-wef-validation-by-powershell.png)
+![Validation WEF via PowerShell](../screenshots/configuration/logging-wef/30-wef-validation-by-powershell.png)
 
 ---
 
