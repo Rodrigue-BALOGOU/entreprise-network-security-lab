@@ -93,7 +93,7 @@ Cette approche garantit une configuration homogène sur toutes les machines int�
 
 La première stratégie active automatiquement le service **WinRM** sur les postes clients et serveurs.
 
-![Configuration GPO WinRM](../screenshots/configuration-wef/logging-wef/04-gpo-winrm.png)
+![Configuration GPO WinRM](../screenshots/configuration/logging-wef/04-gpo-winrm.png)
 
 Une seconde stratégie configure le mécanisme **Windows Event Forwarding** afin que les postes connaissent automatiquement le serveur collecteur auquel transmettre leurs événements.
 
@@ -225,7 +225,7 @@ Une fois la communication établie entre pfSense et le serveur de collecte, les 
 
 Cette validation confirme le bon fonctionnement de la chaîne de collecte des événements réseau.
 
-![Réception des journaux pfSense](../screenshots/configuration/logging-wef/20-logs-pfsense-receiver.png)
+![Réception des journaux pfSense](../screenshots/configuration/logging-wef/20-logs-pfsense-received.png)
 
 La collecte des événements Windows et des journaux réseau est désormais centralisée sur **ST-FILESERVER01**, offrant un point unique de supervision et d'analyse.
 
