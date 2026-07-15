@@ -158,6 +158,9 @@ Le journal **Forwarded Events** devient alors le point central de consultation d
 
 ![Observateur d'événements - Forwarded Events](../screenshots/configuration/logging-wef/11-event-viewer-forwarding.png)
 
+
+![Architecture WEF](../screenshots/configuration/logging-wef/22-login-overview.png)
+
 ---
 
 ### Journaux centralisés
