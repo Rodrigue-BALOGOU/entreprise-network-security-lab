@@ -1,3 +1,2 @@
 Creation du fichier wsus 
-doc bientot disponible
-oh
+doc bientot disponible DEMAIN
