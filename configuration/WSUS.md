@@ -1,2 +1,2 @@
 Creation du fichier wsus 
-doc bientot disponible DEMAIN
+doc bientot disponible RESTEZ CONNECTEZ
