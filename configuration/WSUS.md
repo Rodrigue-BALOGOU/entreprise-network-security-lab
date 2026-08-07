@@ -108,3 +108,49 @@ Cette séparation permet :
 - d'offrir une meilleure flexibilité lors des évolutions de l'infrastructure.
 
 Cette organisation simplifie l'administration quotidienne et améliore la maintenabilité de l'environnement.
+
+# 2. Architecture de la solution
+
+## 2.1 Vue d'ensemble
+
+L'infrastructure de gestion des mises à jour repose sur une architecture Active Directory segmentée et administrée à l'aide de Windows Server Update Services (WSUS).
+
+Le serveur WSUS centralise le téléchargement des mises à jour Microsoft puis les distribue aux différents postes et serveurs du domaine selon des stratégies de groupe (GPO) spécifiques.
+
+Cette architecture permet de contrôler le déploiement des correctifs tout en limitant les risques opérationnels.
+
+---
+
+## 2.2 Composants de l'infrastructure
+
+| Élément | Rôle |
+|----------|------|
+| pfSense | Pare-feu et routage entre les différents réseaux |
+| ST-DC01 | Contrôleur de domaine Active Directory et serveur DNS |
+| ST-WSUS | Gestion centralisée des mises à jour Microsoft |
+| ST-FILESERVER01 | Serveur de fichiers |
+| PC-ADMIN | Poste pilote utilisé pour valider les mises à jour |
+| PC-IT | Poste utilisateur |
+| PC-FINANCE | Poste utilisateur |
+
+---
+
+## 2.3 Architecture de déploiement
+
+Les mises à jour suivent le processus suivant :
+
+1. Synchronisation entre Microsoft Update et le serveur WSUS.
+2. Validation des mises à jour par l'administrateur.
+3. Déploiement sur le groupe **Postes-Admin**.
+4. Déploiement sur le groupe **Utilisateurs**.
+5. Déploiement sur le groupe **Serveurs**.
+
+Cette stratégie permet de détecter rapidement un éventuel problème avant qu'il n'affecte les systèmes critiques.
+
+---
+
+## 2.4 Communication
+
+Les clients Windows communiquent avec le serveur WSUS via le port **8530 (HTTP)**.
+
+Les paramètres de connexion sont distribués automatiquement grâce aux stratégies de groupe (GPO), garantissant une configuration homogène sur l'ensemble des machines du domaine.
