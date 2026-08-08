@@ -154,3 +154,57 @@ Cette stratégie permet de détecter rapidement un éventuel problème avant qu'
 Les clients Windows communiquent avec le serveur WSUS via le port **8530 (HTTP)**.
 
 Les paramètres de connexion sont distribués automatiquement grâce aux stratégies de groupe (GPO), garantissant une configuration homogène sur l'ensemble des machines du domaine.
+
+
+# 3. Prérequis
+
+Avant le déploiement de WSUS, plusieurs prérequis ont été vérifiés afin de garantir son intégration correcte à l'infrastructure Active Directory.
+
+## 3.1 Prérequis système et réseau
+
+| Élément | Configuration |
+|---|---|
+| Serveur WSUS | Windows Server 2022 |
+| Nom du serveur | ST-WSUS |
+| Domaine | `corp.securetech.local` |
+| Adresse IP | Statique |
+| DNS | ST-DC01 |
+| Accès Internet | Requis pour la synchronisation Microsoft Update |
+| Communication client/WSUS | TCP 8530 |
+| Protocole | HTTP |
+| Adresse WSUS | FQDN du serveur |
+| IIS | Installé automatiquement par l'assistant WSUS |
+
+## 3.2 Intégration Active Directory
+
+ST-WSUS est membre du domaine `corp.securetech.local`.
+
+L'utilisation de **ST-DC01 comme serveur DNS** permet au serveur WSUS et aux clients de résoudre correctement les ressources du domaine et le nom du serveur WSUS.
+
+Les paramètres WSUS sont ensuite distribués aux machines clientes à l'aide de stratégies de groupe (GPO).
+
+## 3.3 Connectivité
+
+ST-WSUS dispose d'un accès Internet afin de récupérer les mises à jour depuis Microsoft Update.
+
+Le port **TCP 8530** est autorisé entre le serveur WSUS et les réseaux des postes utilisateurs et administrateurs afin de permettre :
+
+- la détection des mises à jour ;
+- le téléchargement des mises à jour ;
+- la remontée des informations d'état vers WSUS.
+
+## 3.4 Configuration du client WSUS
+
+Les postes clients sont configurés via GPO pour utiliser le serveur WSUS à travers son **FQDN** :
+
+```text
+http://st-wsus.corp.securetech.local:8530
+```
+
+L'utilisation du FQDN évite de dépendre directement de l'adresse IP du serveur et facilite une éventuelle évolution de l'infrastructure réseau.
+
+## 3.5 Composants nécessaires
+
+Les composants nécessaires au fonctionnement de WSUS, notamment **IIS**, ont été installés et configurés automatiquement par l'assistant d'installation du rôle WSUS.
+
+Cette approche permet de conserver une installation cohérente avec les dépendances requises par le rôle.
