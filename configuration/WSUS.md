@@ -75,7 +75,7 @@ Mettre en place un serveur WSUS intégré à Active Directory afin de :
 
 WSUS a été installé sur un **Windows Server 2022 dédié**.
 
-![Installation du rôle WSUS](../../screenshots/configuration/wsus/role-wsus-installed.png)
+![Installation du rôle WSUS](..WSUS.md/screenshots/configuration/wsus/role-wsus-installed.png)
 
 *Installation du rôle WSUS sur ST-WSUS.*
 
