@@ -234,7 +234,7 @@ UsoClient StartInteractiveScan
 
 Le problème de ciblage et de communication rencontré pendant les tests a finalement été résolu.
 
-![Résolution du problème WSUS](../../screenshots/configuration/wsus/problem-solved.png)
+![Résolution du problème WSUS](../screenshots/configuration/wsus/problem-solved.png)
 
 *Résolution du problème rencontré pendant les tests.*
 
