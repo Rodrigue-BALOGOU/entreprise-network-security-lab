@@ -47,7 +47,7 @@ Le scénario a été réalisé dans un environnement de laboratoire isolé et co
 
 La reconnaissance a été réalisée depuis Kali Linux :
 
-```text
+text
 Kali Linux
 192.168.215.133
 
