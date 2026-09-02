@@ -66,7 +66,7 @@ Plusieurs techniques de reconnaissance ont été utilisées avec Nmap au cours d
 
 Les options utilisées comprennent notamment :
 
-nmap -sS <IP_CIBLE>
+nmap -sS 
 nmap -sV <IP_CIBLE>
 nmap -A <IP_CIBLE>
 
@@ -465,6 +465,7 @@ interruption de la reconnaissance après le blocage.
 
 Cette précision permet de conserver une documentation fidèle aux tests réellement effectués.
 
+
 23. Compétences démontrées
 
 Nmap · NSE · Metasploit · ProFTPD · Reverse Shell · Linux · Suricata IDS/IPS · pfSense · NAT · Port Forwarding · DMZ · Segmentation réseau · Reconnaissance réseau · Post-exploitation · Analyse de sécurité · Red Team · Blue Team
@@ -503,6 +504,7 @@ nmap -A <IP_CIBLE>
 Des scripts NSE ont également été utilisés afin d'obtenir davantage d'informations sur les services détectés.
 
 Cette phase avait pour objectif de passer progressivement d'une simple découverte de la cible à l'identification précise des services disponibles.
+
 3.3 Services exposés
 
 La reconnaissance a permis d'identifier les services suivants :
@@ -511,6 +513,7 @@ Port	Service	État	Rôle
 2121/tcp	FTP	Ouvert	Service FTP
 
 Le port 2121/tcp représente le principal point d'intérêt du scénario.
+
 4. Identification du service FTP
 
 L'énumération du port 2121/tcp a permis d'identifier le service ProFTPD 1.3.x.
@@ -532,6 +535,7 @@ La démarche suivie a été :
 Le service FTP constitue donc le vecteur d'attaque unique retenu pour ce scénario.
 
 Aucun autre service n'a été utilisé comme vecteur principal de compromission.
+
 5. Recherche de vulnérabilité
 
 Après l'identification de ProFTPD, une recherche a été effectuée avec Metasploit afin d'identifier une méthode d'exploitation correspondant au service découvert.
@@ -541,6 +545,7 @@ L'objectif était de déterminer si le service FTP pouvait être exploité depui
 Cette phase permet de passer de la reconnaissance à la validation d'un scénario d'exploitation.
 
 La vulnérabilité identifiée sur le service FTP a ensuite été exploitée dans le cadre du laboratoire.
+
 6. Exploitation du FTP
 6.1 Lancement de l'exploitation
 
@@ -553,6 +558,7 @@ L'exploitation a abouti à l'ouverture d'un shell sur la machine cible.
 La session obtenue était une session shell et non une session Meterpreter.
 
 Cette étape confirme qu'un attaquant disposant d'un accès au service FTP exposé pouvait dépasser le simple accès au service et obtenir une interaction directe avec le système.
+
 6.2 Reverse shell
 
 L'exploitation a permis d'obtenir un reverse shell sur la machine VulnHub.
@@ -560,6 +566,7 @@ L'exploitation a permis d'obtenir un reverse shell sur la machine VulnHub.
 Le message d'ouverture du shell dans Metasploit constitue la preuve de la réussite de cette phase.
 
 La compromission peut alors être considérée comme effective : l'attaquant dispose désormais d'un accès interactif au système compromis.
+
 
 7. Vérification des privilèges
 
@@ -626,6 +633,7 @@ La reconnaissance ne permettait pas d'obtenir une visibilité équivalente sur l
 Cette observation est importante car elle permet de mesurer concrètement l'efficacité de la segmentation après une compromission.
 
 Même avec un accès root sur la machine DMZ, l'attaquant ne dispose donc pas automatiquement d'une visibilité complète sur le réseau interne.
+
 11. Reconnaissance Nmap depuis la machine compromise
 11.1 Installation de Nmap
 
@@ -646,6 +654,7 @@ Les résultats ont principalement fait apparaître les éléments correspondant 
 
 Aucun ensemble d'hôtes appartenant aux autres segments internes n'a été découvert depuis cette position.
 
+
 12. Vérification du mouvement latéral
 12.1 Test vers le contrôleur de domaine
 
@@ -658,6 +667,7 @@ Le contrôleur de domaine utilise l'adresse :
 Une requête ICMP a été envoyée depuis la machine compromise vers cette adresse.
 
 Aucune réponse n'a été obtenue.
+
 
 12.2 Analyse
 
@@ -674,6 +684,7 @@ La segmentation réseau limite donc les possibilités de progression depuis la m
 Il convient toutefois de préciser que l'absence de réponse ICMP ne constitue pas, à elle seule, la preuve que tous les protocoles vers 192.168.10.103 sont bloqués.
 
 Le résultat doit être interprété avec les autres tests de reconnaissance et avec la politique de filtrage mise en place sur pfSense.
+
 13. Impact de la compromission
 
 La vulnérabilité du service FTP a permis d'obtenir un shell root sur la machine DMZ.
@@ -701,6 +712,7 @@ Cette action permet de démontrer l'un des impacts possibles d'une compromission
 L'arrêt de la machine ne constitue cependant pas une compromission des autres systèmes de l'infrastructure.
 
 Les tests réalisés n'ont pas démontré de mouvement latéral réussi vers les réseaux internes.
+
 14. Détection avec Suricata IDS
 
 Pendant les phases de reconnaissance et d'exploitation, Suricata était configuré en mode IDS.
@@ -714,6 +726,7 @@ L'IDS a donc permis de conserver une visibilité sur l'activité de l'attaquant 
 Cette phase est importante car elle permet d'observer une situation dans laquelle l'attaque est détectée mais n'est pas automatiquement interrompue.
 
 L'attaquant a ainsi pu poursuivre le scénario jusqu'à l'obtention du reverse shell.
+
 
 15. Passage de l'IDS à l'IPS
 
@@ -731,6 +744,7 @@ La différence principale réside donc dans le mode de fonctionnement de Suricat
 En mode IDS, le trafic suspect est détecté et enregistré.
 
 En mode IPS, la détection peut être accompagnée d'une action de blocage.
+
 16. Nouvelle reconnaissance en mode IPS
 
 Après activation de l'IPS, une nouvelle reconnaissance Nmap a été effectuée depuis Kali Linux.
@@ -772,6 +786,7 @@ L'expérimentation permet donc de mettre en évidence la différence opérationn
 Avec l'IDS, l'activité malveillante est visible et enregistrée.
 
 Avec l'IPS, la détection est associée à une capacité de réaction permettant de bloquer l'activité identifiée.
+
 19. Résultats du scénario
 Étape	Résultat
 Reconnaissance externe	Réussie
@@ -796,6 +811,7 @@ Détection en mode IPS	Réussie
 Blocage de Kali	Réussi
 Nouvelle reconnaissance après blocage	Interrompue
 20. Analyse de sécurité
+
 20.1 Le service FTP représente le point d'entrée
 
 Le scénario démontre qu'un service exposé à Internet peut constituer un point d'entrée critique lorsqu'une vulnérabilité exploitable est présente.
@@ -805,6 +821,7 @@ Dans ce laboratoire, le port 2121/tcp était volontairement exposé vers la mach
 L'identification de ProFTPD a permis de poursuivre l'analyse jusqu'à l'exploitation.
 
 Le FTP représente donc le vecteur d'attaque unique du scénario.
+
 20.2 La détection ne suffit pas à elle seule
 
 Suricata IDS a permis de détecter et d'enregistrer les activités suspectes.
