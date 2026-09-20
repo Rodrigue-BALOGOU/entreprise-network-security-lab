@@ -20,8 +20,6 @@ Les phases de reconnaissance et d'exploitation ont généré des alertes dans Su
 
 Une alerte observée pendant les tests :
 
-```text
-
 ET SCAN Suspicious inbound to mySQL port 3306
 
 En mode IDS, Suricata permet de détecter et d'enregistrer les activités suspectes sans interrompre automatiquement le trafic.
