@@ -53,7 +53,7 @@ Après l'obtention d'un accès `root` sur la machine compromise, des tests de re
 
 Un test de connectivité a notamment été effectué vers le contrôleur de domaine :
 
-```text
+
 192.168.10.103
 Une requête ICMP a été envoyée depuis la machine compromise. Aucune réponse n'a été obtenue.
 
@@ -71,7 +71,7 @@ Après les tests réalisés en mode IDS, Suricata a été configuré en mode **I
 
 Une nouvelle reconnaissance Nmap a été effectuée depuis Kali Linux :
 
-```text
+
 192.168.215.133
 
 Suricata a détecté l'activité et a généré l'alerte suivante :
